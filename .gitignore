@@ -1,0 +1,76 @@
+# ============================================
+# linux-do-explorer .gitignore
+# ============================================
+
+# --- CHIAVI E SEGRETI (CRITICO: non committare mai) ---
+# File con chiavi API reali, password, cookie di sessione
+VPS-STACK-RELAY.md
+taobao_capcut.py
+
+# --- File e dir di config/secrets generici ---
+.env
+.env.*
+*.pem
+*.key
+id_rsa*
+auth.json
+models.json
+
+# --- Temporanei / log / test output ---
+*.log
+bridge-test.log
+cases/
+logs/
+*.tmp
+*.bak
+
+# --- Python ---
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+.venv/
+venv/
+ENV/
+env/
+
+# --- Subdir linuxdo-archive-assistant (ha il suo .gitignore, ma proteggiamo qui) ---
+linuxdo-archive-assistant/.git/
+linuxdo-archive-assistant/.venv/
+linuxdo-archive-assistant/__pycache__/
+linuxdo-archive-assistant/build/
+linuxdo-archive-assistant/dist/
+linuxdo-archive-assistant/packaging/*.zip
+linuxdo-archive-assistant/cases/
+linuxdo-archive-assistant/logs/
+
+# --- OS / Editor / IDE ---
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+.idea/
+.vscode/
+*.sublime-*
+*~
+
+# --- Altro ---
+*.zip
+*.tar.gz
+*.rar
