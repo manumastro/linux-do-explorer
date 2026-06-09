@@ -75,7 +75,7 @@ Legenda: ✅ configurato e testato · 🟡 account / chiave nota, **non** in con
 ### 4.1 Default Pi (2026-06-09)
 
 ```json
-"defaultProvider": "xiaomi-sgp-scadenza-10giugno",
+"defaultProvider": "xiaomi-cn-scadenza-10giugno",
 "defaultModel": "mimo-v2.5"
 ```
 
@@ -84,6 +84,7 @@ Comando rapido:
 ```bash
 pi                                    # MiMo V2.5 (default)
 pi --provider xiaomi-sgp-scadenza-10giugno --model mimo-v2.5    # MiMo via SGP
+pi --provider xiaomi-cn-scadenza-10giugno --model mimo-v2.5    # MiMo via CN
 pi --provider claude-routerpark --model claude-sonnet-4-6    # tuo account RouterPark
 pi --provider claude-routerpark-bbs --model claude-sonnet-4-6   # key giveaway BBS
 pi --model claude-routerpark/claude-opus-4-8
@@ -99,6 +100,7 @@ pi --model claude-routerpark/claude-opus-4-8
 | `bluesminds` | `https://api.bluesminds.com/v1` | openai-completions | qwen3.6-plus, qwen3.6-max-preview, glm-5.1 | Key in `models.json` |
 | `52model` | `https://52mx.net/v1` | openai-responses | gpt-5.3-codex | Key in `models.json` |
 | `xiaomi-sgp-scadenza-10giugno` | `https://token-plan-sgp.xiaomimimo.com/v1` | openai-completions | MiMo V2.5, V2.5 Pro, V2 Pro, V2 Omni | ✅ `tp-s94z…` (scadenza 10/06) |
+| `xiaomi-cn-scadenza-10giugno` | `https://token-plan-cn.xiaomimimo.com/v1` | openai-completions | MiMo V2.5, V2.5 Pro, V2 Pro, V2 Omni | ✅ `tp-cgqr…` (scadenza 10/06, ~10B credits) |
 | `claude-routerpark` | `https://routerpark.com/v1` | **openai-completions** | claude-opus-4-8, claude-sonnet-4-6, claude-haiku-4-5-… | ✅ account `sk-HhQF…` |
 | `claude-routerpark-bbs` | `https://routerpark.com/v1` | **openai-completions** | stessi modelli (label · BBS) | ✅ giveaway `sk-P42A…` (attivo CLI) |
 | `minimax-iamhc` | `https://api.iamhc.cn` | anthropic-messages | **MiniMax-M3** | ✅ `sk-41Ek…` |
