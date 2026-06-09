@@ -185,10 +185,11 @@ La maggior parte dei relay accetta:
 
 Questi servizi sono stati testati dall'utente e funzionano bene, ma non sono ancora presenti su HelpAIO o nelle classifiche della community.
 
-| Servizio | URL | Note | Status |
-|----------|-----|------|--------|
-| **知界API (ZhiJie)** | [zjapi.com](https://zjapi.com) | Unified LLM API gateway, supporta Claude/GPT/Gemini. Acquistato tramite Taobao con bonus credito | ✅ Funzionante |
-| **Anbalu** | [app.anbalu.top](https://app.anbalu.top) | Relay service con "One-Click Access", "Pay What You Use". Acquistato tramite Taobao con bonus credito | ✅ Funzionante |
+| Servizio | URL | Modelli | Note | Status |
+|----------|-----|---------|------|--------|
+| **知界API (ZhiJie)** | [zjapi.com](https://zjapi.com) | GPT-5.4, 5.4-mini, 5.3-codex | Unified LLM API gateway. Acquistato tramite Taobao con bonus credito | ✅ Funzionante |
+| **Anbalu** | [app.anbalu.top](https://app.anbalu.top) | GPT-5.2, 5.4, 5.5, 5.3-codex | Relay service con "One-Click Access", "Pay What You Use". Acquistato tramite Taobao | ✅ Funzionante |
+| **LyClaude** | [free.lyclaude.site](https://free.lyclaude.site) | GPT-5.4, GPT-5.5 | UnifiedLLM API gateway, cache tokens attivo (4864 cached). Nonostante il nome, non ha Claude | ✅ Funzionante |
 
 > ⚠️ **Nota:** Questi servizi non sono ancora stati valutati da HelpAIO o dalla community linux.do. Prova con piccole somme prima di depositare grandi importi.
 

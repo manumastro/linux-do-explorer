@@ -71,13 +71,14 @@
 
 ## ⚠️ Servizi Verificati dall'Utente (non su HelpAIO)
 
-| Servizio | URL | Note |
-|----------|-----|------|
-| **知界API (ZhiJie)** | [zjapi.com](https://zjapi.com) | Unified LLM gateway, acquistato su Taobao |
-| **Anbalu** | [app.anbalu.top](https://app.anbalu.top) | Relay service, acquistato su Taobao |
+| Servizio | URL | Modelli | Note |
+|----------|-----|---------|------|
+| **知界API (ZhiJie)** | [zjapi.com](https://zjapi.com) | GPT-5.4, 5.4-mini, 5.3-codex | Unified LLM gateway, acquistato su Taobao |
+| **Anbalu** | [app.anbalu.top](https://app.anbalu.top) | GPT-5.2, 5.4, 5.5, 5.3-codex | Relay service, acquistato su Taobao |
+| **LyClaude** | [free.lyclaude.site](https://free.lyclaude.site) | GPT-5.4, GPT-5.5 | UnifiedLLM gateway, cache tokens attivo, nessun Claude nonostante il nome |
 
 > ⚠️ Non ancora valutati da HelpAIO. Prova con piccole somme.
 
 ---
 
-*File aggiornato il 2026-05-30*
+*File aggiornato il 2026-06-09*

@@ -4,10 +4,13 @@
 
 # --- CHIAVI E SEGRETI (CRITICO: non committare mai) ---
 # File con chiavi API reali, password, cookie di sessione
-VPS-STACK-RELAY.md
+VPS-STACK-RELAY.md  # Originale in chiaro (non pushare)
 taobao_capcut.py
 28个gpt账号/
 grok_register/
+
+# File crittografati (OK da pushare)
+!VPS-STACK-RELAY-ENCRYPTED.md
 
 # --- File e dir di config/secrets generici ---
 .env

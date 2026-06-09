@@ -121,10 +121,11 @@ Claude 中转          — Relay specifici
 
 ## 🤖 SERVIZI VERIFICATI DALL'UTENTE
 
-| Servizio | URL | Status |
-|----------|-----|--------|
-| **知界API (ZhiJie)** | [zjapi.com](https://zjapi.com) | ✅ Funzionante |
-| **Anbalu** | [app.anbalu.top](https://app.anbalu.top) | ✅ Funzionante |
+| Servizio | URL | Modelli | Status |
+|----------|-----|---------|--------|
+| **知界API (ZhiJie)** | [zjapi.com](https://zjapi.com) | GPT-5.4, 5.4-mini, 5.3-codex | ✅ Funzionante |
+| **Anbalu** | [app.anbalu.top](https://app.anbalu.top) | GPT-5.2, 5.4, 5.5, 5.3-codex | ✅ Funzionante |
+| **LyClaude** | [free.lyclaude.site](https://free.lyclaude.site) | GPT-5.4, GPT-5.5 | ✅ Funzionante (cache tokens attivo) |
 
 ---
 
