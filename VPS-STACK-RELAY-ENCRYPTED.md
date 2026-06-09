@@ -1,7 +1,7 @@
 # VPS — Stack AI, relay e configurazioni
 
 **Host:** `vmi2825141` (Ubuntu, user `manu`)  
-**Data documento:** 2026-06-08  
+**Data documento:** 2026-06-09
 **Ambito:** tutto ciò che gira su **questo VPS** (Pi, Claude Code, Codex, chiavi in `~/.pi/agent`, `~/.claude`, `~/.codex`).
 
 > 🔐 **Sicurezza:** questo file contiene **password e chiavi API crittografate**. Per decrittografare: `python3 encrypt_vps_v2.py decrypt VPS-STACK-RELAY-ENCRYPTED.md`
@@ -24,7 +24,7 @@
 
 | App | File config | Provider / endpoint | Modello default |
 |-----|-------------|---------------------|-----------------|
-| **Pi** | `~/.pi/agent/settings.json` | `minimax-cn` → `api.minimaxi.com/anthropic` | `MiniMax-M3` |
+| **Pi** | `~/.pi/agent/settings.json` | `openai-anbalu` → `https://api.anbalu.top/v1` | `gpt-5.4-mini` |
 | **Claude Code** | `~/.claude/settings.json` | **RouterPark BBS** → `https://routerpark.com` | `claude-sonnet-4-6` |
 | **Codex** | `~/.codex/config.toml` | **Anbalu** → `https://api.anbalu.top/v1` | `gpt-5.5` |
 | **Pi (Grok)** | `~/.pi/agent/models.json` | **grok2api-local** → `http://127.0.0.1:8000/v1` | `grok-4.3-console` (on demand) |
@@ -43,7 +43,7 @@ Legenda: ✅ configurato e testato · 🟡 account / chiave nota, **non** in con
 | [zjapi.com](https://zjapi.com/) | **manustrong1212** / ENC:aPbNZjS9pzZSZw== | `https://zjapi.com/v1` | ✅ In Pi | `openai-zjapi` |
 | [app.anbalu.top](https://app.anbalu.top/) | **emanuele.mastronardi.2002.12@gmail.com** / ENC:aPbNZjS9pzZSZw== | `https://api.anbalu.top/v1` | ✅ Pi + **Codex default** | `openai-anbalu` |
 | [rkapi.com](https://rkapi.com/console/personal) | **manustrong** / ENC:aPbNZjS9pzZSZw== | (console RK API) | 🟡 Account only | — |
-| [freemodel.dev](https://freemodel.dev/dashboard) | **emanuele.mastronardi.2002.12@gmail.com** | `https://api.freemodel.dev` · Claude: `https://cc.freemodel.dev` | ✅ Pi + **Claude Code** | `openai-freemodel`, `claude-freemodel` |
+| [freemodel.dev](https://freemodel.dev/dashboard) | **emanuele.mastronardi.2002.12@gmail.com** | `https://api.freemodel.dev` · Claude: `https://cc.freemodel.dev` | ✅ In Pi (profilo Claude in catalogo) | `openai-freemodel`, `claude-freemodel` |
 | [api.bluesminds.com](https://api.bluesminds.com/) | GitHub | `https://api.bluesminds.com/v1` | ✅ In Pi (non default) | `bluesminds` |
 | [52mx.net](https://52mx.net/console) | **manumastro** / ENC:aPbNZjS9pzZSZw== | `https://52mx.net/v1` | ✅ In Pi | `52model` |
 | [api520.pro](https://api520.pro/) | **trapbeats1212@gmail.com** / ENC:aPbNZjS9pzZSZw== | (prob. OpenAI-compatible) | 🟡 Account only | — |
@@ -55,7 +55,10 @@ Legenda: ✅ configurato e testato · 🟡 account / chiave nota, **non** in con
 |----------|-----|------|
 | **grok2api-local** `http://127.0.0.1:8000/v1` | Pi Grok console + multi-agent | 150 SSO da `grok_register/`; stack Docker WARP; guida `GROK2API-DEPLOY.md` |
 | **RouterPark** `https://routerpark.com/v1` | Pi Claude (2 provider) + **Claude CLI** | Account `sk-HhQF…` + BBS `sk-P42A…` (attivo); API Pi = **openai-completions** |
-| **MiniMax ufficiale CN** `https://api.minimaxi.com/anthropic` | Pi `minimax-cn` | Key Token Plan `sk-cp-...` (anche key pubblica forum) |
+| **api.777358.xyz** `https://api.777358.xyz/v1` | Pi `openai-777358` | Giveaway linux.do; key in `auth.json` |
+| **BUG TEAM** `https://test-ai.833323.xyz/v1` | Pi `bugteam-linuxdo` | Giveaway linux.do (2026-06-09); sito temporaneo, no immagini |
+| **Xiaomi Token Plan** SGP + CN | Pi `xiaomi-sgp/cn-scadenza-10giugno` | MiMo V2.5; scadenza 10/06 |
+| **MiniMax ufficiale CN** `https://api.minimaxi.com/anthropic` | Pi `minimax-cn` | `MiniMax-M2.7` (key forum RouterPark) |
 | **OpenAI Codex OAuth** | Pi `openai-codex`, `openai-codex-2` | Account ChatGPT Plus collegati in `auth.json` |
 | **OpenCode / OpenCode-Go** | Pi `opencode`, `opencode-go` | Key in `auth.json` (non è uno dei siti nella tabella) |
 | **OAuth gratuiti** | Pi | GitHub Copilot, Google Gemini/Antigravity, Qwen portal, Cline, Kilo (extension `custom-free-models`) |
@@ -75,16 +78,17 @@ Legenda: ✅ configurato e testato · 🟡 account / chiave nota, **non** in con
 ### 4.1 Default Pi (2026-06-09)
 
 ```json
-"defaultProvider": "xiaomi-cn-scadenza-10giugno",
-"defaultModel": "mimo-v2.5"
+"defaultProvider": "openai-anbalu",
+"defaultModel": "gpt-5.4-mini"
 ```
 
 Comando rapido:
 
 ```bash
-pi                                    # MiMo V2.5 (default)
-pi --provider xiaomi-sgp-scadenza-10giugno --model mimo-v2.5    # MiMo via SGP
-pi --provider xiaomi-cn-scadenza-10giugno --model mimo-v2.5    # MiMo via CN
+pi                                    # GPT-5.4-mini via Anbalu (default)
+pi --provider bugteam-linuxdo --model gpt-5.4    # BUG TEAM giveaway linux.do
+pi --provider openai-777358 --model gpt-5.5      # api.777358.xyz giveaway
+pi --provider xiaomi-cn-scadenza-10giugno --model mimo-v2.5    # MiMo via CN (scade 10/06)
 pi --provider claude-routerpark --model claude-sonnet-4-6    # tuo account RouterPark
 pi --provider claude-routerpark-bbs --model claude-sonnet-4-6   # key giveaway BBS
 pi --model claude-routerpark/claude-opus-4-8
@@ -103,8 +107,10 @@ pi --model claude-routerpark/claude-opus-4-8
 | `xiaomi-cn-scadenza-10giugno` | `https://token-plan-cn.xiaomimimo.com/v1` | openai-completions | MiMo V2.5, V2.5 Pro, V2 Pro, V2 Omni | ✅ `tp-cgqr…` (scadenza 10/06, ~10B credits) |
 | `claude-routerpark` | `https://routerpark.com/v1` | **openai-completions** | claude-opus-4-8, claude-sonnet-4-6, claude-haiku-4-5-… | ✅ account `sk-HhQF…` |
 | `claude-routerpark-bbs` | `https://routerpark.com/v1` | **openai-completions** | stessi modelli (label · BBS) | ✅ giveaway `sk-P42A…` (attivo CLI) |
-| `minimax-iamhc` | `https://api.iamhc.cn` | anthropic-messages | **MiniMax-M3** | ✅ `sk-41Ek…` |
-| `minimax-cn` | `https://api.minimaxi.com/anthropic` | anthropic-messages | MiniMax-M3 | ✅ `sk-cp-…` |
+| `minimax-iamhc` | `https://api.iamhc.cn` | anthropic-messages | **MiniMax-M3**, glm-5.1, Kimi-K2.5/2.6 | ✅ `sk-41Ek…` |
+| `minimax-cn` | `https://api.minimaxi.com/anthropic` | anthropic-messages | MiniMax-M2.7 | Key in `models.json` |
+| `openai-777358` | `https://api.777358.xyz/v1` | openai-completions | gpt-5.5, gpt-5.4, gpt-5.4-mini, gpt-5.3-codex, … | ✅ `$API_777358_KEY` |
+| `bugteam-linuxdo` | `https://test-ai.833323.xyz/v1` | openai-completions | gpt-5.5, gpt-5.4, gpt-5.4-mini, gpt-5.3-codex, … | Key in `models.json` (giveaway) |
 | `grok2api-local` | `http://127.0.0.1:8000/v1` | openai-completions | grok-4.3-console, grok-4.20-multi-agent-xhigh, … | ✅ `grok-local-…` |
 
 **Comandi Grok (Pi):**
@@ -165,7 +171,7 @@ Deploy e import SSO: vedi `linux-do-explorer/GROK2API-DEPLOY.md`.
 | `~/.claude/profiles.json` | **Catalogo** di tutti i profili disponibili (sorgente di verità) |
 | `~/.pi/agent/extensions/claude-code-multi-account/index.ts` | Definizione profili + comandi `/claude-*` in Pi |
 
-### 5.2 Profilo attivo (2026-06-06)
+### 5.2 Profilo attivo (2026-06-09)
 
 **`claude-routerpark-bbs`** — key cpass giveaway del post RouterPark.
 
@@ -241,7 +247,7 @@ Script sync Codex OAuth → Pi: `~/.pi/agent/bin/sync-codex-to-pi-slot.sh`
 
 | Canale | Endpoint | Modello | Stato |
 |--------|----------|---------|--------|
-| **Ufficiale CN Token Plan** | `https://api.minimaxi.com/anthropic` | `MiniMax-M3` (non `MiniMax-M3.0`) | ✅ Pi `minimax-cn` |
+| **Ufficiale CN (key forum)** | `https://api.minimaxi.com/anthropic` | `MiniMax-M2.7` | ✅ Pi `minimax-cn` |
 | **iamhc relay** | `https://api.iamhc.cn` | `MiniMax-M3` | ✅ Pi `minimax-iamhc` (~$5/M) |
 | **Forum RouterPark** | stessa key `sk-cp-...` | M2.7 nel post, M3 in test | Key pubblica; quota condivisa |
 
@@ -304,8 +310,8 @@ Non configurati su VPS. Per provare: registrazione su aicodelink ($1 test citato
 
 ### ✅ Usiamo (configurato + usato)
 
-- **Pi:** minimax-cn (default), RouterPark account + BBS, iamhc MiniMax-M3, Anbalu, ZjAPI, FreeModel, 52mx, Bluesminds, **grok2api-local**, OAuth Codex/Qwen/Copilot/Gemini
-- **Claude Code:** FreeModel
+- **Pi:** Anbalu (default), xiaomi Token Plan SGP/CN, RouterPark account + BBS, iamhc MiniMax-M3, ZjAPI, FreeModel, 52mx, Bluesminds, **openai-777358**, **bugteam-linuxdo**, **grok2api-local**, OAuth Codex/Qwen/Copilot/Gemini
+- **Claude Code:** RouterPark BBS (`claude-routerpark-bbs`)
 - **Codex:** Anbalu
 
 ### 🟡 Abbiamo account / chiavi ma non integrati (o solo parziale)
@@ -332,6 +338,8 @@ Non configurati su VPS. Per provare: registrazione su aicodelink ($1 test citato
 5. Test post **aicodelink** / **ranai** — key pubbliche non funzionanti.
 6. Config **`minimax-iamhc`**, **`minimax-cn`**, test `token_plan/remains`.
 7. Deploy **grok2api** (fork jiujiu532, stack WARP), import 150 SSO, provider Pi **`grok2api-local`**.
+8. Provider **`openai-777358`** (giveaway linux.do) e **`bugteam-linuxdo`** (post BUG TEAM 2026-06-09, `test-ai.833323.xyz`).
+9. Rimosso **`lyclaude`** da Pi (hotaruapi.com — disattivato per ora).
 
 ---
 
@@ -348,7 +356,7 @@ pi --provider claude-routerpark --model claude-sonnet-4-6 --print "ok"
 pi --provider claude-routerpark-bbs --model claude-sonnet-4-6 --print "ok"
 pi --provider minimax-iamhc --model MiniMax-M3 --print "ok"
 
-# Claude Code (config attuale FreeModel)
+# Claude Code (config attuale RouterPark BBS)
 claude -p "ok"
 
 # Codex (config attuale Anbalu)
@@ -357,6 +365,10 @@ codex -p "ok"
 # Grok locale (grok2api)
 pi --provider grok2api-local --model grok-4.3-console --print "ok"
 docker-compose -f ~/grok2api/docker-compose.warp.yml ps
+
+# Giveaway linux.do (temporanei — possibili 429)
+pi --provider bugteam-linuxdo --model gpt-5.4 --print "ok"
+pi --provider openai-777358 --model gpt-5.5 --print "ok"
 ```
 
 ---
@@ -401,6 +413,7 @@ Tutto ciò che è salvato su questo VPS al 2026-06-02. Per siti 🟡 senza riga 
 | `openai-freemodel` | `https://api.freemodel.dev` | `ENC:Q/L8fGfSpTxVbd+aa8zZTTVH/PVZP7WS2UiOlF3LXCBGrsAmPu7zPVM0i547kdpKNhKg8F8+` |
 | `bluesminds` | `https://api.bluesminds.com/v1` | `ENC:VvyOa0L82047FNDYLb2NFEVElK4EBLXry0mIz16fGi5J/MxZPsncaRoviPwVhJgKUwKv` |
 | `52model` | `https://52mx.net/v1` | `ENC:VvyOcla/+0YVJtnNOY6sEjIooKoNM+HA0UTj0A2dFFJg0/pSP++jSjkS2tEbuZIKchq3` |
+| `bugteam-linuxdo` | `https://test-ai.833323.xyz/v1` | `ENC:VvyOd2O+9jMAbNjLZ5DbSTVA9KMNabXL2kuKlQvFWSMS88UkMbmlPVFk35lskohNMUH39Fg7sJ+PHI+WXMsPcx2hkQ==` |
 
 In `models.json` i provider sotto usano placeholder; la key reale è in `auth.json`:
 
@@ -409,7 +422,9 @@ In `models.json` i provider sotto usano placeholder; la key reale è in `auth.js
 | `claude-routerpark` | `$ROUTERPARK_API_KEY` | `ENC:VvyOW27c0XEbMKHtbLqkIUw1nZQpJNqf+lWJwmyGFE9z4eFqa+DVUyQApvo2pIZBVx+O` |
 | `claude-routerpark-bbs` | `$ROUTERPARK_BBS_API_KEY` | `ENC:VvyOQzK/1mYPG4jYOISsHVc7kJAEOe+e8UvJwnS4I3ZQ8ft0Td6uRShnsJotjoI6czme` |
 | `minimax-iamhc` | `$MINIMAX_IAMHC_API_KEY` | `ENC:VvyOJzfI/FFVEKznNJ+pCVgQlp8dZbbC1nvf5GqHWVBf8dZYfP/ibzAe3fs0pIE/UQOD` |
-| `minimax-cn` | `$MINIMAX_CN_API_KEY` | `ENC:VvyOcHago1YVbJPwL62kGmweiYQ9Zfbmimv4xFqIV0EQ5dAgZ9jAZhkXpv0InLUtcCeUnQk0xe6LbuTlWqZXURzPjn1V5dpzVBiAwBWMq0t0FKLwGjzl5JJj3eV/hhlmQsD1Y3bHwzUqI7bbKMSyPnsutZQDb+aY8XTUkVY=` |
+| `openai-777358` | `$API_777358_KEY` | `ENC:VvyOKzG08T1QYI/PapCMTWdE8aNba7Wdj0nawgvCWXYTpMIhY7r2NVo00Z5tldpAYED0pF5t486OSN/HX8UIcRf1lg==` |
+| `xiaomi-sgp-scadenza-10giugno` | `$TOKEN_PLAN_SGP_KEY` | `tp-s94zhtmxe9ljhh8rp03m23dlxate6h88ksnfjr14a3mk73iy` |
+| `xiaomi-cn-scadenza-10giugno` | (key diretta in `models.json`) | `tp-cgqragt586ex6styk56p4uiiypibfslm4iou1pdw33rlt51w` |
 | `grok2api-local` | `$GROK2API_API_KEY` | `ENC:QuXMeCvh+GcCOcTNb5bZHzMTpfJWa7TOiRWKx1yXCCQc9JZ3P+jxMFBh3w==` |
 
 ### 13.3 API key — Pi `~/.pi/agent/auth.json` (altri provider)
@@ -585,7 +600,9 @@ Per i JWT OAuth molto lunghi (Copilot, Codex, Cline), il file sorgente canonico 
 |---------|----------|-----|-------------|
 | **Account RouterPark** | `routerpark.com/v1` | `ENC:VvyOW27c0XEbMKHtbLqkIUw1nZQpJNqf+lWJwmyGFE9z4eFqa+DVUyQApvo2pIZBVx+O` | ✅ `claude-routerpark` |
 | Claude cpass (giveaway 2026-06-05) | `routerpark.com/v1` | `ENC:VvyOQzK/1mYPG4jYOISsHVc7kJAEOe+e8UvJwnS4I3ZQ8ft0Td6uRShnsJotjoI6czme` | ✅ `claude-routerpark-bbs` + Claude CLI |
-| MiniMax (post) | `api.minimaxi.com/anthropic` | `ENC:VvyOcHago1YVbJPwL62kGmweiYQ9Zfbmimv4xFqIV0EQ5dAgZ9jAZhkXpv0InLUtcCeUnQk0xe6LbuTlWqZXURzPjn1V5dpzVBiAwBWMq0t0FKLwGjzl5JJj3eV/hhlmQsD1Y3bHwzUqI7bbKMSyPnsutZQDb+aY8XTUkVY=` | ✅ `minimax-cn` |
+| MiniMax (post) | `api.minimaxi.com/anthropic` | `ENC:VvyOcHagoD0GMILAGLKHMWgCg6RcNfKe/E+C1m2tPXoV3eAqXMj7WyEjrYQlkd4pcDnwpC0uwdrwRv7nW8UpLnzixWdru69nKgei/Q2h2kliMrOOWgzX5+xd2vBLvxkjYNrEIlT59jQiHZCaNZm5K2s5o7MYGPv693LW2Gg=` | ✅ `minimax-cn` (M2.7) |
+| BUG TEAM (post 2026-06-09) | `https://test-ai.833323.xyz/v1` | `ENC:VvyOd2O+9jMAbNjLZ5DbSTVA9KMNabXL2kuKlQvFWSMS88UkMbmlPVFk35lskohNMUH39Fg7sJ+PHI+WXMsPcx2hkQ==` | ✅ `bugteam-linuxdo` (temporaneo) |
+| api.777358 (giveaway) | `https://api.777358.xyz/v1` | `ENC:VvyOKzG08T1QYI/PapCMTWdE8aNba7Wdj0nawgvCWXYTpMIhY7r2NVo00Z5tldpAYED0pF5t486OSN/HX8UIcRf1lg==` | ✅ `openai-777358` |
 | Codex v2api (post) | `https://v2api.top/` | `sk-Clt5…` (nel thread) | ❌ |
 | aicodelink (post 六一) | `https://aicodelink.top/v1` | `ENC:VvyOW3T+2FBQMZ/RMZGgLlE3vfRabPbYx1rU1WOxXEUX3dVhSMmgMwQRrpkRm4kBRSeV` | ❌ invalid |
 | ranai Codex (commento OP) | `https://sub.ranai.chat/v1` | `ENC:VvyOdjO18jZQYNiYb5KPGDFCoqMNPrOZ3B/alQuQXCRH8ZYrY+v2N1Q0iJ1mxdpNYBfy91w54JraGN/FWsVbIhD0kQ==` | ❌ invalid |
@@ -617,9 +634,15 @@ curl -s https://api.minimaxi.com/v1/token_plan/remains \
 
 # iamhc MiniMax-M3
 curl -s https://api.iamhc.cn/v1/messages \
-  -H "Authorization: Bearer ENC:VvyOJzfI/FFVEKznNJ+pCVgQlp8dZbbC1nvf5GqHWVBf8dZYfP/ibzAe3fs0pIE/UQOD" \
+  -H "Authorization: Bearer ENC:VvyOJzfI/FFVEKznNJ+pCVgQlp8dZbbC1nvf5GqHWVBf5dZ4VcajVggFgu8Phq0=" \
   -H "Content-Type: application/json" \
   -d '{"model":"MiniMax-M3","max_tokens":16,"messages":[{"role":"user","content":"ok"}]}'
+
+# BUG TEAM (giveaway linux.do — temporaneo, no immagini)
+curl -s https://test-ai.833323.xyz/v1/chat/completions \
+  -H "Authorization: Bearer ENC:VvyOd2O+9jMAbNjLZ5DbSTVA9KMNabXL2kuKlQvFWSMS88UkMbmlPVFk35lskohNMUH39Fg7sJ+PHI+WXMsPcx2hkQ==" \
+  -H "Content-Type: application/json" \
+  -d '{"model":"gpt-5.4","max_tokens":16,"messages":[{"role":"user","content":"ok"}]}'
 ```
 
 ---
@@ -628,7 +651,7 @@ curl -s https://api.iamhc.cn/v1/messages \
 
 1. **MicuAPI** — generare API key in console e aggiungere `openai-micu` in `models.json` (top HelpAIO).
 2. **RKAPI / api520** — stesso flusso se i prezzi conviene.
-3. Allineare **Claude Code** a RouterPark o Micu se FreeModel dà limiti (con modello ID completo, non `haiku`).
+3. **Claude Code** è già su RouterPark BBS; valutare Micu se i limiti BBS diventano stretti (modello ID completo, non `haiku`).
 4. Ruotare key **pubbliche** se esposte in chat (account RouterPark `sk-HhQF…`); BBS `sk-P42A…` è giveaway condivisa — usare con moderazione.
 5. **aicodelink** — solo con key personale da registrazione, non quella del post.
 6. Aggiungere **iamhc** provider OpenAI per `qwen3.6-plus` se vuoi un solo billing su quel conto.

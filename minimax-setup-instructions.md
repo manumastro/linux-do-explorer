@@ -1,13 +1,14 @@
 # 🛠️ Istruzioni: Configurare MiniMax M2.7 Gratis su Pi
 
-**Data:** 2026-06-08  
-**Fonte:** RouterPark (chiave gratuita)
+**Data:** 2026-06-09  
+**Fonte:** RouterPark (chiave gratuita)  
+**Stack VPS:** vedi `VPS-STACK-RELAY.md` §7 (canale `minimax-cn`, non default Pi)
 
 ---
 
 ## 📋 Riepilogo
 
-MiniMax M2.7 è un modello AI gratuito disponibile via RouterPark. La chiave è stata testata e funziona.
+MiniMax M2.7 è configurato in Pi come provider `minimax-cn`. **Default Pi attuale:** `openai-anbalu` / `gpt-5.4-mini` (non MiniMax).
 
 ---
 

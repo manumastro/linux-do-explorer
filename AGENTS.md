@@ -1,6 +1,6 @@
 # 📚 AGENTS.md — Come Esplorare il Mercato Grigio API AI
 
-**Data:** 2026-05-30
+**Data:** 2026-06-09
 
 ---
 
@@ -8,29 +8,125 @@
 
 > **PRIMA di tutto, consulta sempre le guide in locale nella cartella `/home/manu/linux-do-explorer/`**
 >
-> 1. Leggi `MEGA-SUNTO.md` per un riepilogo rapido
-> 2. Leggi `relay-services-guide.md` per dettagli completi
-> 3. Leggi `recommended-relays.md` per i top pick
-> 4. Leggi `linux-do-navigation-guide.md` per navigare il forum
-> 5. Poi, solo se necessario, fai ricerche web aggiuntive
+> 1. Leggi **`VPS-STACK-RELAY.md`** — **sorgente di verità** per stack VPS (Pi, Claude Code, Codex, provider attivi)
+> 2. Leggi `MEGA-SUNTO.md` per un riepilogo rapido del mercato relay
+> 3. Leggi `relay-services-guide.md` per dettagli completi
+> 4. Leggi `recommended-relays.md` per i top pick commerciali
+> 5. Leggi `linux-do-navigation-guide.md` per navigare il forum
+> 6. Poi, solo se necessario, fai ricerche web aggiuntive
+
+---
+
+## 🔄 Workflow — Aggiornare stack VPS e documentazione
+
+**`VPS-STACK-RELAY.md` comanda.** Ogni modifica a Pi, Claude Code, Codex o relay va propagata in ordine:
+
+### 1. Test e config runtime
+
+```bash
+# Verifica endpoint (sostituisci URL, key, modello)
+curl -s https://ESEMPIO.xyz/v1/models -H "Authorization: Bearer sk-..."
+
+# Integra in Pi (~/.pi/agent/)
+#   models.json   → nuovo provider (baseUrl, api, modelli, key)
+#   settings.json → enabledModels
+#   auth.json     → solo se usi placeholder $VAR (es. openai-777358)
+
+# Test Pi
+pi --provider NOME --model MODELLO --print "ok"
+```
+
+### 2. Aggiorna sorgente di verità (locale, gitignored)
+
+Modifica **`VPS-STACK-RELAY.md`**:
+
+- §2 Default attuali
+- §3–§4 Provider Pi (`models.json`)
+- §5 Claude Code / §6 Codex se cambiano
+- §9 Cosa usiamo vs no
+- §10 Cronologia (nuova riga)
+- §13 Chiavi (se applicabile)
+
+> ⚠️ `VPS-STACK-RELAY.md` **non va in git** (chiavi in chiaro). Resta solo sul VPS.
+
+### 3. Rigenera versione crittografata (committabile)
+
+```bash
+cd /home/manu/linux-do-explorer
+python3 encrypt_vps_v2.py
+# → aggiorna VPS-STACK-RELAY-ENCRYPTED.md
+```
+
+### 4. Allinea le guide (stesso commit)
+
+| File | Cosa aggiornare |
+|------|-----------------|
+| `AGENTS.md` | Stack VPS sintesi + questo workflow |
+| `MEGA-SUNTO.md` | § Stack VPS + servizi verificati |
+| `recommended-relays.md` | Sezione VPS configurato |
+| `relay-services-guide.md` | Tabella provider Pi |
+| `linux-do-navigation-guide.md` | Giveaway integrati + flusso |
+| `GROK2API-DEPLOY.md` | Se tocca Grok |
+| `minimax-setup-instructions.md` | Se tocca MiniMax |
+| `relay-monitor-agent-design.md` | Se cambia il processo agente |
+| `~/.pi/agent/SPEC.md` | Default provider/model |
+
+### 5. Commit e push
+
+```bash
+git add AGENTS.md MEGA-SUNTO.md VPS-STACK-RELAY-ENCRYPTED.md \
+  recommended-relays.md relay-services-guide.md linux-do-navigation-guide.md \
+  GROK2API-DEPLOY.md minimax-setup-instructions.md relay-monitor-agent-design.md \
+  grok-video-relay-guide.md
+git commit -m "docs: allinea guide a VPS-STACK-RELAY (provider X)"
+git push
+```
+
+**Checklist rapida**
+
+- [ ] Relay testato con curl + `pi --print`
+- [ ] `VPS-STACK-RELAY.md` aggiornato (locale)
+- [ ] `python3 encrypt_vps_v2.py` eseguito
+- [ ] Guide allineate (tabella §4)
+- [ ] Data `2026-06-09` o corrente nei file toccati
+- [ ] Nessun `VPS-STACK-RELAY.md` in `git add`
 
 ---
 
 ## 📖 Indice
 
 1. [Obiettivo](#obiettivo)
-2. [Strumenti Pi da Utilizzare](#strumenti-pi-da-utilizzare)
-3. [Come Cercare su Linux.do](#come-cercare-su-linuxdo)
-4. [Come Verificare un Relay](#come-verificare-un-relay)
-5. [Come Comprare su Taobao](#come-comprare-su-taobao)
-6. [Strategia Consigliata](#strategia-consigliata)
-7. [Risorse da Monitorare](#risorse-da-monitorare)
+2. [Workflow aggiornamento stack](#-workflow--aggiornare-stack-vps-e-documentazione)
+3. [Stack VPS attuale](#stack-vps-attuale-sintesi-da-vps-stack-relaymd)
+4. [Strumenti Pi da Utilizzare](#strumenti-pi-da-utilizzare)
+5. [Come Cercare su Linux.do](#come-cercare-su-linuxdo)
+6. [Come Verificare un Relay](#come-verificare-un-relay)
+7. [Come Comprare su Taobao](#come-comprare-su-taobao)
+8. [Strategia Consigliata](#strategia-consigliata)
+9. [Risorse da Monitorare](#risorse-da-monitorare)
 
 ---
 
 ## Obiettivo
 
 Trovare **relay services (中转站)** affidabili che diano accesso a modelli AI (Claude, GPT, Gemini, Codex) a prezzi economici.
+
+---
+
+## Stack VPS attuale (sintesi da VPS-STACK-RELAY.md)
+
+| App | Default | Endpoint |
+|-----|---------|----------|
+| **Pi** | `openai-anbalu` / `gpt-5.4-mini` | `https://api.anbalu.top/v1` |
+| **Claude Code** | `claude-sonnet-4-6` | RouterPark BBS → `https://routerpark.com` |
+| **Codex** | `gpt-5.5` | Anbalu → `https://api.anbalu.top/v1` |
+| **Pi (Grok)** | `grok-4.3-console` on demand | `grok2api-local` → `http://127.0.0.1:8000/v1` |
+
+**Giveaway linux.do in Pi (temporanei):** `bugteam-linuxdo` (`test-ai.833323.xyz`), `openai-777358` (`api.777358.xyz`).
+
+**Rimosso da Pi:** `lyclaude` (hotaruapi.com — disattivato 2026-06-09).
+
+Per provider, chiavi, comandi e cronologia: vedi **`VPS-STACK-RELAY.md`** (versione crittografata: `VPS-STACK-RELAY-ENCRYPTED.md`).
 
 ---
 
@@ -239,4 +335,4 @@ Claude 中转           — Relay specifici
 
 ---
 
-*Guida aggiornata il 2026-05-30*
+*Guida aggiornata il 2026-06-09 — stack VPS allineato a `VPS-STACK-RELAY.md`*

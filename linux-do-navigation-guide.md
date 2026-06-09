@@ -4,9 +4,14 @@
 
 ```
 /home/manu/linux-do-explorer/
-├── relay-services-guide.md           # Guida completa relay (aggiornata)
+├── VPS-STACK-RELAY.md                # ⭐ Sorgente di verità stack VPS (Pi, Claude, Codex)
+├── VPS-STACK-RELAY-ENCRYPTED.md      # Stessa guida, chiavi crittografate
+├── MEGA-SUNTO.md                     # Riepilogo mercato relay
+├── relay-services-guide.md           # Guida completa relay
+├── recommended-relays.md             # Top pick commerciali
 ├── linux-do-navigation-guide.md      # Questa guida (navigazione)
-└── linux-do-explorer-agent-design.md # Design agente (da rivedere)
+├── GROK2API-DEPLOY.md                # Grok self-hosted su VPS
+└── relay-monitor-agent-design.md     # Design agente monitoraggio
 ```
 
 ---
@@ -192,4 +197,17 @@ LINUX.DO
 
 ---
 
-*Guida aggiornata il 2026-05-30*
+## 🎁 Giveaway 福利羊毛 → configurazione VPS
+
+Quando trovi un post con URL + API key in **福利羊毛**, verifica e integra seguendo **`VPS-STACK-RELAY.md`**:
+
+| Post (esempio) | Provider Pi | Endpoint | Stato |
+|----------------|-------------|----------|-------|
+| BUG TEAM 2000 account (2026-06-09) | `bugteam-linuxdo` | `test-ai.833323.xyz/v1` | ✅ Temporaneo, no immagini |
+| api.777358 giveaway | `openai-777358` | `api.777358.xyz/v1` | ✅ Quota condivisa |
+
+**Flusso:** test curl → aggiungi in `~/.pi/agent/models.json` → abilita in `settings.json` → aggiorna `VPS-STACK-RELAY.md` → allinea le altre guide.
+
+---
+
+*Guida aggiornata il 2026-06-09 — stack VPS: `VPS-STACK-RELAY.md`*

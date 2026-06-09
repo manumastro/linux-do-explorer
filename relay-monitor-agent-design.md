@@ -1,7 +1,19 @@
 # 🤖 Design Agente: Linux.do Relay Monitor
 
+**Data:** 2026-06-09
+
 ## Obiettivo
 Creare un agente che monitora linux.do e altre fonti per trovare e valutare relay services (中转站) per API AI a prezzi economici.
+
+## Output e integrazione VPS
+
+Quando un relay viene testato e integrato sul VPS, aggiornare in ordine:
+
+1. **`VPS-STACK-RELAY.md`** — sorgente di verità (provider, default, chiavi, cronologia)
+2. `python3 encrypt_vps_v2.py` — rigenera `VPS-STACK-RELAY-ENCRYPTED.md`
+3. Guide allineate: `AGENTS.md`, `MEGA-SUNTO.md`, `recommended-relays.md`, `relay-services-guide.md`, `linux-do-navigation-guide.md`
+
+**Stack attuale (sintesi):** Pi default `openai-anbalu`/`gpt-5.4-mini`, Claude Code RouterPark BBS, Codex Anbalu. Giveaway linux.do: `bugteam-linuxdo`, `openai-777358`.
 
 ---
 
@@ -444,4 +456,4 @@ Dashboard:
 
 ---
 
-*Design v1.0 — 2026-05-30*
+*Design v1.1 — 2026-06-09 — integrazione VPS via `VPS-STACK-RELAY.md`*

@@ -1,6 +1,8 @@
 # ⭐ Relay Consigliati — Top Pick
 
-**Ultimo aggiornamento:** 2026-05-30
+**Ultimo aggiornamento:** 2026-06-09
+
+> **Stack VPS:** la configurazione reale (default Pi, Claude Code, Codex, provider attivi) è in **`VPS-STACK-RELAY.md`** — questo file copre il mercato generale e i top pick commerciali.
 
 ---
 
@@ -69,16 +71,43 @@
 
 ---
 
-## ⚠️ Servizi Verificati dall'Utente (non su HelpAIO)
+## ✅ Servizi configurati sul VPS (VPS-STACK-RELAY.md)
 
-| Servizio | URL | Modelli | Note |
-|----------|-----|---------|------|
-| **知界API (ZhiJie)** | [zjapi.com](https://zjapi.com) | GPT-5.4, 5.4-mini, 5.3-codex | Unified LLM gateway, acquistato su Taobao |
-| **Anbalu** | [app.anbalu.top](https://app.anbalu.top) | GPT-5.2, 5.4, 5.5, 5.3-codex | Relay service, acquistato su Taobao |
-| **LyClaude** | [free.lyclaude.site](https://free.lyclaude.site) | GPT-5.4, GPT-5.5 | UnifiedLLM gateway, cache tokens attivo, nessun Claude nonostante il nome |
+### Default produzione
 
-> ⚠️ Non ancora valutati da HelpAIO. Prova con piccole somme.
+| App | Provider | Modello | URL |
+|-----|----------|---------|-----|
+| **Pi** | `openai-anbalu` | `gpt-5.4-mini` | [api.anbalu.top/v1](https://api.anbalu.top/v1) |
+| **Claude Code** | RouterPark BBS | `claude-sonnet-4-6` | [routerpark.com](https://routerpark.com) |
+| **Codex** | Anbalu | `gpt-5.5` | [api.anbalu.top/v1](https://api.anbalu.top/v1) |
+
+### Altri relay in Pi (account propri)
+
+| Servizio | Provider Pi | Modelli | Note |
+|----------|-------------|---------|------|
+| **知界API (ZhiJie)** | `openai-zjapi` | GPT-5.4, 5.4-mini, 5.3-codex | Taobao |
+| **Anbalu** | `openai-anbalu` | GPT-5.2–5.5, Codex | **Default Pi** |
+| **FreeModel** | `openai-freemodel` | GPT-5.x, Codex | In catalogo, non default Claude |
+| **RouterPark** | `claude-routerpark` / `-bbs` | Claude 4.x | BBS attivo in Claude CLI |
+| **iamhc** | `minimax-iamhc` | MiniMax-M3, Kimi, GLM | |
+| **52mx** | `52model` | GPT-5.3-codex | |
+| **Bluesminds** | `bluesminds` | Qwen, GLM | |
+| **Xiaomi Token Plan** | `xiaomi-sgp/cn-*` | MiMo V2.5 | Scade 10/06 |
+| **Grok** | `grok2api-local` | grok-4.3-console, multi-agent | Self-hosted |
+
+### Giveaway linux.do (temporanei)
+
+| Servizio | Provider Pi | URL | Modelli | Note |
+|----------|-------------|-----|---------|------|
+| **BUG TEAM** | `bugteam-linuxdo` | `test-ai.833323.xyz` | GPT-5.5, 5.4, Codex | No immagini; 429 possibili |
+| **api.777358** | `openai-777358` | `api.777358.xyz` | GPT-5.5, 5.4, Codex | Quota condivisa |
+
+### Rimosso da Pi
+
+| Servizio | Stato |
+|----------|-------|
+| **LyClaude** (hotaruapi.com / free.lyclaude.site) | ❌ Disattivato 2026-06-09 |
 
 ---
 
-*File aggiornato il 2026-06-09*
+*File aggiornato il 2026-06-09 — allineato a `VPS-STACK-RELAY.md`*

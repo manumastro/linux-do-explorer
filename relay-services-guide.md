@@ -1,6 +1,8 @@
 # 🇨🇳 Chinese AI API Relay Services (中转站) — Guida Completa
 
-**Data:** 2026-05-30  
+**Data:** 2026-06-09  
+
+> **Stack VPS:** per default Pi, Claude Code, Codex e provider configurati → **`VPS-STACK-RELAY.md`** (sorgente di verità).
 **Fonti:** [helpaio.com/transit](https://www.helpaio.com/transit), [codex.miaomiaocode.com](https://codex.miaomiaocode.com), linux.do
 
 ---
@@ -181,17 +183,41 @@ La maggior parte dei relay accetta:
 
 ---
 
-## 🛒 Servizi Verificati dall'Utente (non su HelpAIO)
+## 🖥️ Stack VPS configurato (VPS-STACK-RELAY.md)
 
-Questi servizi sono stati testati dall'utente e funzionano bene, ma non sono ancora presenti su HelpAIO o nelle classifiche della community.
+### Default produzione
 
-| Servizio | URL | Modelli | Note | Status |
-|----------|-----|---------|------|--------|
-| **知界API (ZhiJie)** | [zjapi.com](https://zjapi.com) | GPT-5.4, 5.4-mini, 5.3-codex | Unified LLM API gateway. Acquistato tramite Taobao con bonus credito | ✅ Funzionante |
-| **Anbalu** | [app.anbalu.top](https://app.anbalu.top) | GPT-5.2, 5.4, 5.5, 5.3-codex | Relay service con "One-Click Access", "Pay What You Use". Acquistato tramite Taobao | ✅ Funzionante |
-| **LyClaude** | [free.lyclaude.site](https://free.lyclaude.site) | GPT-5.4, GPT-5.5 | UnifiedLLM API gateway, cache tokens attivo (4864 cached). Nonostante il nome, non ha Claude | ✅ Funzionante |
+| App | Provider | Modello | Endpoint |
+|-----|----------|---------|----------|
+| **Pi** | `openai-anbalu` | `gpt-5.4-mini` | `https://api.anbalu.top/v1` |
+| **Claude Code** | RouterPark BBS | `claude-sonnet-4-6` | `https://routerpark.com` |
+| **Codex** | Anbalu | `gpt-5.5` | `https://api.anbalu.top/v1` |
 
-> ⚠️ **Nota:** Questi servizi non sono ancora stati valutati da HelpAIO o dalla community linux.do. Prova con piccole somme prima di depositare grandi importi.
+### Tutti i provider Pi attivi
+
+| Provider ID | Base URL | Tipo | Note |
+|-------------|----------|------|------|
+| `openai-anbalu` | api.anbalu.top/v1 | openai-responses | **Default Pi** |
+| `openai-zjapi` | zjapi.com/v1 | openai-responses | |
+| `openai-freemodel` | api.freemodel.dev | openai-responses | |
+| `openai-777358` | api.777358.xyz/v1 | openai-completions | Giveaway linux.do |
+| `bugteam-linuxdo` | test-ai.833323.xyz/v1 | openai-completions | BUG TEAM, temporaneo, no immagini |
+| `claude-routerpark` | routerpark.com/v1 | openai-completions | Account personale |
+| `claude-routerpark-bbs` | routerpark.com/v1 | openai-completions | **Claude CLI attivo** |
+| `minimax-iamhc` | api.iamhc.cn | anthropic-messages | MiniMax-M3 |
+| `minimax-cn` | api.minimaxi.com/anthropic | anthropic-messages | MiniMax-M2.7 |
+| `xiaomi-sgp/cn-scadenza-10giugno` | token-plan-*.xiaomimimo.com/v1 | openai-completions | MiMo V2.5, scade 10/06 |
+| `bluesminds` | api.bluesminds.com/v1 | openai-completions | Qwen, GLM |
+| `52model` | 52mx.net/v1 | openai-responses | Codex |
+| `grok2api-local` | 127.0.0.1:8000/v1 | openai-completions | Self-hosted |
+
+### Rimosso da Pi (2026-06-09)
+
+| Servizio | Motivo |
+|----------|--------|
+| **LyClaude** (hotaruapi.com) | Disattivato — non più in `models.json` |
+
+> Per chiavi, comandi, cronologia e profili Claude: vedi **`VPS-STACK-RELAY.md`**.
 
 ---
 
@@ -391,4 +417,4 @@ web_search(query="site:linux.do taobao API 中转 充值", max_results=10)
 
 ---
 
-*Guida aggiornata il 2026-05-30*
+*Guida aggiornata il 2026-06-09 — stack VPS allineato a `VPS-STACK-RELAY.md`*

@@ -1,6 +1,26 @@
 # 🎯 MEGA SUNTO — Tutto ciò che puoi esplorare ORA
 
-**Data:** 2026-05-30
+**Data:** 2026-06-09
+
+---
+
+## 🖥️ STACK VPS — Sorgente di verità: `VPS-STACK-RELAY.md`
+
+| App | Default attuale | Note |
+|-----|-----------------|------|
+| **Pi** | Anbalu · `gpt-5.4-mini` | `pi` senza flag |
+| **Claude Code** | RouterPark BBS · `claude-sonnet-4-6` | Non FreeModel |
+| **Codex** | Anbalu · `gpt-5.5` | |
+| **Grok (Pi)** | `grok2api-local` · `grok-4.3-console` | Self-hosted, on demand |
+
+**Relay linux.do attivi in Pi:** `bugteam-linuxdo` (BUG TEAM, temporaneo), `openai-777358` (giveaway).
+
+**Comandi rapidi:**
+```bash
+pi --provider bugteam-linuxdo --model gpt-5.4
+pi --provider openai-777358 --model gpt-5.5
+pi --provider claude-routerpark-bbs --model claude-sonnet-4-6
+```
 
 ---
 
@@ -119,13 +139,42 @@ Claude 中转          — Relay specifici
 
 ---
 
-## 🤖 SERVIZI VERIFICATI DALL'UTENTE
+## 🤖 SERVIZI VERIFICATI SUL VPS (da VPS-STACK-RELAY.md)
 
-| Servizio | URL | Modelli | Status |
-|----------|-----|---------|--------|
-| **知界API (ZhiJie)** | [zjapi.com](https://zjapi.com) | GPT-5.4, 5.4-mini, 5.3-codex | ✅ Funzionante |
-| **Anbalu** | [app.anbalu.top](https://app.anbalu.top) | GPT-5.2, 5.4, 5.5, 5.3-codex | ✅ Funzionante |
-| **LyClaude** | [free.lyclaude.site](https://free.lyclaude.site) | GPT-5.4, GPT-5.5 | ✅ Funzionante (cache tokens attivo) |
+### A pagamento / account propri
+
+| Servizio | Provider Pi | Modelli | Ruolo |
+|----------|-------------|---------|-------|
+| **Anbalu** | `openai-anbalu` | GPT-5.5, 5.4, 5.4-mini, 5.3-codex | **Default Pi** + Codex |
+| **知界API (ZhiJie)** | `openai-zjapi` | GPT-5.4, 5.4-mini, 5.3-codex | Backup GPT |
+| **FreeModel** | `openai-freemodel` | GPT-5.x, Codex | In Pi (non default) |
+| **RouterPark** | `claude-routerpark` / `-bbs` | Claude Opus/Sonnet/Haiku | **Claude CLI = BBS** |
+| **iamhc** | `minimax-iamhc` | MiniMax-M3, Kimi, GLM | |
+| **52mx** | `52model` | GPT-5.3-codex | |
+| **Bluesminds** | `bluesminds` | Qwen, GLM | |
+
+### Giveaway linux.do (temporanei, quota condivisa)
+
+| Servizio | Provider Pi | URL | Modelli | Note |
+|----------|-------------|-----|---------|------|
+| **BUG TEAM** | `bugteam-linuxdo` | `test-ai.833323.xyz` | GPT-5.5, 5.4, 5.4-mini, Codex | No immagini; possibili 429 |
+| **api.777358** | `openai-777358` | `api.777358.xyz` | GPT-5.5, 5.4, 5.4-mini, Codex | Giveaway forum |
+
+### Altri canali Pi
+
+| Servizio | Provider Pi | Note |
+|----------|-------------|------|
+| **Xiaomi Token Plan** | `xiaomi-sgp/cn-scadenza-10giugno` | MiMo V2.5, scade 10/06 |
+| **MiniMax forum** | `minimax-cn` | MiniMax-M2.7 |
+| **Grok self-hosted** | `grok2api-local` | 150 SSO, WARP |
+
+### ❌ Rimosso / non in Pi
+
+| Servizio | Stato |
+|----------|-------|
+| **LyClaude** (hotaruapi.com) | Rimosso da Pi 2026-06-09 |
+
+Dettaglio completo: **`VPS-STACK-RELAY.md`**
 
 ---
 

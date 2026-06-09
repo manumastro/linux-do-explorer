@@ -1,7 +1,8 @@
 # 🎬 GROK VIDEO API — Guida Completa Relay
 
-**Data:** 2026-05-31  
-**Ultimo aggiornamento:** Ricerca relay per Grok Video (xAI) — image-to-video, text-to-video
+**Data:** 2026-06-09  
+**Ultimo aggiornamento:** Ricerca relay per Grok Video (xAI) — image-to-video, text-to-video  
+**Stack VPS Grok chat:** `grok2api-local` in `VPS-STACK-RELAY.md` + `GROK2API-DEPLOY.md`
 
 ---
 
@@ -331,4 +332,4 @@ print(response.json()["output_url"])
 
 ---
 
-*Guida aggiornata il 2026-05-31*
+*Guida aggiornata il 2026-06-09*
