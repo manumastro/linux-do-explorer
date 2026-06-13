@@ -16,6 +16,15 @@ def xor_encrypt(data: str, key: str) -> str:
         encrypted.append(chr(ord(char) ^ key_hash[i % len(key_hash)]))
     return base64.b64encode(''.join(encrypted).encode('latin-1')).decode()
 
+def xor_decrypt(data: str, key: str) -> str:
+    """Decrittografa dati ENC: (base64 + XOR)."""
+    key_hash = hashlib.sha256(key.encode()).digest()
+    decoded = base64.b64decode(data.encode()).decode('latin-1')
+    decrypted = []
+    for i, char in enumerate(decoded):
+        decrypted.append(chr(ord(char) ^ key_hash[i % len(key_hash)]))
+    return ''.join(decrypted)
+
 def encrypt_file(input_file: str, output_file: str, key: str):
     """Crittografa solo i dati sensibili nel file."""
     with open(input_file, 'r', encoding='utf-8') as f:
@@ -31,6 +40,9 @@ def encrypt_file(input_file: str, output_file: str, key: str):
         
         # API keys sk-* (lunghezza > 20)
         (r'sk-[A-Za-z0-9_-]{20,}', lambda m: 'ENC:' + xor_encrypt(m.group(), key)),
+
+        # MiMo / token-plan keys (tp-*)
+        (r'tp-[A-Za-z0-9]{20,}', lambda m: 'ENC:' + xor_encrypt(m.group(), key)),
         
         # fe_oa_* keys
         (r'fe_oa_[A-Za-z0-9]{20,}', lambda m: 'ENC:' + xor_encrypt(m.group(), key)),
@@ -116,7 +128,7 @@ def decrypt_file(input_file: str, output_file: str, key: str):
     def replace_encrypted(match):
         encrypted = match.group(1)
         try:
-            decrypted = xor_encrypt(encrypted, key)  # XOR è simmetrico
+            decrypted = xor_decrypt(encrypted, key)
             return decrypted
         except:
             return match.group(0)

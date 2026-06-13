@@ -20,6 +20,7 @@ grok_register/
 id_rsa*
 auth.json
 models.json
+stack-backup/
 
 # --- Temporanei / log / test output ---
 *.log

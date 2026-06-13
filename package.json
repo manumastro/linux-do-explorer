@@ -1,0 +1,14 @@
+{
+  "name": "linux-do-explorer",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Pi package: relay explorer guides, stack manifest, bootstrap helpers",
+  "keywords": ["pi-package"],
+  "peerDependencies": {
+    "@earendil-works/pi-coding-agent": "*"
+  },
+  "pi": {
+    "extensions": ["./pi/extensions"],
+    "skills": ["./pi/skills"]
+  }
+}

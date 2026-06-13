@@ -1,0 +1,85 @@
+{
+  "version": 1,
+  "updated": "2026-06-13",
+  "description": "Machine-readable stack definition for reproducing the VPS Pi/Claude/Codex setup",
+  "repos": {
+    "linux-do-explorer": {
+      "remote": "git:github.com/manumastro/linux-do-explorer@main",
+      "role": "guides, encrypted stack, bootstrap scripts, this manifest"
+    },
+    "my-pi": {
+      "remote": "git:github.com/manumastro/my-pi@master",
+      "role": "Pi settings.json, extensions (no auth.json / models.json)"
+    }
+  },
+  "runtimePaths": {
+    "piAgent": "~/.pi/agent",
+    "piSettings": "~/.pi/agent/settings.json",
+    "piModels": "~/.pi/agent/models.json",
+    "piAuth": "~/.pi/agent/auth.json",
+    "claudeSettings": "~/.claude/settings.json",
+    "claudeProfiles": "~/.claude/profiles.json",
+    "codexConfig": "~/.codex/config.toml",
+    "codexAuth": "~/.codex/auth.json",
+    "grok2apiConfig": "~/grok2api/data/config.toml"
+  },
+  "secrets": {
+    "plainStackDoc": "VPS-STACK-RELAY.md",
+    "encryptedStackDoc": "VPS-STACK-RELAY-ENCRYPTED.md",
+    "decrypt": "python3 encrypt_vps_v2.py decrypt",
+    "encrypt": "python3 encrypt_vps_v2.py",
+    "gitignored": ["VPS-STACK-RELAY.md", "auth.json", "models.json"]
+  },
+  "defaults": {
+    "pi": { "provider": "claude-anyrouter", "model": "claude-haiku-4-5-20251001" },
+    "claudeCode": { "baseUrl": "https://anyrouter.top", "model": "claude-haiku-4-5-20251001" },
+    "codex": { "baseUrl": "https://api.anbalu.top/v1", "model": "gpt-5.5" }
+  },
+  "piPackages": {
+    "required": [
+      "git:github.com/manumastro/my-pi@master",
+      "git:github.com/manumastro/linux-do-explorer@main"
+    ],
+    "optional": [
+      "pi-context-saver",
+      "pi-dcp",
+      "@ramarivera/pi-grok-build"
+    ]
+  },
+  "envVars": [
+    "ROUTERPARK_API_KEY",
+    "ROUTERPARK_BBS_API_KEY",
+    "API_777358_KEY",
+    "MIMO_CN_API_KEY",
+    "DEEPSEEK_API_KEY",
+    "GROK2API_API_KEY",
+    "MINIMAX_IAMHC_API_KEY"
+  ],
+  "guides": [
+    { "id": "agents", "file": "AGENTS.md", "role": "workflow agenti + stack sintesi" },
+    { "id": "vps-stack", "file": "VPS-STACK-RELAY-ENCRYPTED.md", "role": "stack completo (crittografato)" },
+    { "id": "mega-sunto", "file": "MEGA-SUNTO.md", "role": "riepilogo mercato relay" },
+    { "id": "relay-guide", "file": "relay-services-guide.md", "role": "tabella provider Pi" },
+    { "id": "recommended", "file": "recommended-relays.md", "role": "top pick commerciali" },
+    { "id": "linux-do-nav", "file": "linux-do-navigation-guide.md", "role": "navigazione forum + giveaway" },
+    { "id": "grok-deploy", "file": "GROK2API-DEPLOY.md", "role": "deploy grok2api locale" }
+  ],
+  "smokeTests": [
+    { "label": "Pi default (AnyRouter haiku)", "cmd": "pi --print ok" },
+    { "label": "MiMo CN", "cmd": "pi --provider mimo-cn --model mimo-v2.5-pro --print ok" },
+    { "label": "Anbalu GPT", "cmd": "pi --provider openai-anbalu --model gpt-5.4-mini --print ok" },
+    { "label": "RouterPark Claude", "cmd": "pi --provider claude-routerpark --model claude-haiku-4-5-20251001 --print ok" },
+    { "label": "Grok locale", "cmd": "pi --provider grok2api-local --model grok-4.3-console --print ok" }
+  ],
+  "bootstrapOrder": [
+    "Install pi CLI (Node 24+)",
+    "Clone linux-do-explorer",
+    "python3 encrypt_vps_v2.py decrypt  →  VPS-STACK-RELAY.md (locale, chmod 600)",
+    "pi install git:github.com/manumastro/my-pi@master",
+    "pi install git:github.com/manumastro/linux-do-explorer@main",
+    "bash scripts/sync-pi-secrets.sh import  (or copy §13 VPS-STACK-RELAY.md)",
+    "Set env vars from §13.7 / manifest envVars",
+    "Run smokeTests",
+    "Align docs: encrypt → commit guides"
+  ]
+}

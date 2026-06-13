@@ -1,0 +1,6 @@
+{
+  "packages": [
+    "git:github.com/manumastro/my-pi@master",
+    "git:github.com/manumastro/linux-do-explorer@main"
+  ]
+}

@@ -97,19 +97,74 @@ git push
 
 1. [Obiettivo](#obiettivo)
 2. [Workflow aggiornamento stack](#-workflow--aggiornare-stack-vps-e-documentazione)
-3. [Stack VPS attuale](#stack-vps-attuale-sintesi-da-vps-stack-relaymd)
-4. [Strumenti Pi da Utilizzare](#strumenti-pi-da-utilizzare)
-5. [Come Cercare su Linux.do](#come-cercare-su-linuxdo)
-6. [Come Verificare un Relay](#come-verificare-un-relay)
-7. [Come Comprare su Taobao](#come-comprare-su-taobao)
-8. [Strategia Consigliata](#strategia-consigliata)
-9. [Risorse da Monitorare](#risorse-da-monitorare)
+3. [Integrazione Pi (riproduzione ambiente)](#integrazione-pi-riproduzione-ambiente)
+4. [Stack VPS attuale](#stack-vps-attuale-sintesi-da-vps-stack-relaymd)
+5. [Strumenti Pi da Utilizzare](#strumenti-pi-da-utilizzare)
+6. [Come Cercare su Linux.do](#come-cercare-su-linuxdo)
+7. [Come Verificare un Relay](#come-verificare-un-relay)
+8. [Come Comprare su Taobao](#come-comprare-su-taobao)
+9. [Strategia Consigliata](#strategia-consigliata)
+10. [Risorse da Monitorare](#risorse-da-monitorare)
 
 ---
 
 ## Obiettivo
 
 Trovare **relay services (中转站)** affidabili che diano accesso a modelli AI (Claude, GPT, Gemini, Codex) a prezzi economici.
+
+---
+
+## Integrazione Pi (riproduzione ambiente)
+
+Questo repo è anche un **pi-package**: guide, skills, comandi e bootstrap per clonare lo stack su un altro VPS.
+
+### Due repo
+
+| Repo | Contenuto | In git |
+|------|-----------|--------|
+| **linux-do-explorer** | Guide, `VPS-STACK-RELAY-ENCRYPTED.md`, `pi/manifest.json`, skills, extension | Sì (no segreti in chiaro) |
+| **my-pi** | `settings.json`, extensions (`anyrouter-claude-code-compat`, …) | Sì (no `models.json` / `auth.json`) |
+
+### Bootstrap su macchina nuova
+
+```bash
+git clone https://github.com/manumastro/linux-do-explorer.git
+cd linux-do-explorer
+python3 encrypt_vps_v2.py decrypt VPS-STACK-RELAY-ENCRYPTED.md   # → VPS-STACK-RELAY.md locale
+bash scripts/bootstrap-pi.sh
+```
+
+Oppure install manuale:
+
+```bash
+pi install git:github.com/manumastro/my-pi@master
+pi install git:github.com/manumastro/linux-do-explorer@main
+```
+
+Segreti (`models.json`, `auth.json`):
+
+```bash
+# Sul VPS sorgente — esporta backup gitignored
+bash scripts/sync-pi-secrets.sh export
+rsync -av stack-backup/ nuovo-vps:~/linux-do-explorer/stack-backup/
+
+# Sul VPS nuovo — dopo bootstrap
+bash scripts/sync-pi-secrets.sh import
+```
+
+Alternativa: copia a mano da `VPS-STACK-RELAY.md` §13.
+
+### Comandi e skills in Pi
+
+| Comando | Azione |
+|---------|--------|
+| `/explorer-guide` | Elenco guide e percorsi repo |
+| `/stack-bootstrap` | Checklist riproduzione (legge `pi/manifest.json`) |
+| `/relay-test [provider] [model]` | Smoke test provider |
+
+Skills: `/skill:vps-stack-relay` · `/skill:relay-explorer`
+
+Manifest machine-readable: `pi/manifest.json` (default, smoke tests, env vars, ordine bootstrap).
 
 ---
 
