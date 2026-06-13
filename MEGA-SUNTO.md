@@ -1,6 +1,6 @@
 # 🎯 MEGA SUNTO — Tutto ciò che puoi esplorare ORA
 
-**Data:** 2026-06-09
+**Data:** 2026-06-13
 
 ---
 
@@ -8,18 +8,19 @@
 
 | App | Default attuale | Note |
 |-----|-----------------|------|
-| **Pi** | Anbalu · `gpt-5.4-mini` | `pi` senza flag |
-| **Claude Code** | RouterPark BBS · `claude-sonnet-4-6` | Non FreeModel |
+| **Pi** | AnyRouter · `claude-haiku-4-5-20251001` | `pi` senza flag |
+| **Claude Code** | AnyRouter · `claude-haiku-4-5-20251001` | opus-4-6 offline; sonnet/opus richiedono 1M |
 | **Codex** | Anbalu · `gpt-5.5` | |
 | **Grok (Pi)** | `grok2api-local` · `grok-4.3-console` | Self-hosted, on demand |
 
-**Relay linux.do attivi in Pi:** `bugteam-linuxdo` (BUG TEAM, temporaneo), `openai-777358` (giveaway).
+**Giveaway attivi in Pi:** `mimo-cn` (MiMo RouterPark BBS), `bugteam-linuxdo`, `openai-777358`. **DeepSeek:** API ufficiale pronta, manca key.
 
 **Comandi rapidi:**
 ```bash
+pi --provider mimo-cn --model mimo-v2.5-pro
+pi --provider openai-anbalu --model gpt-5.4-mini
+pi --provider claude-anyrouter --model claude-opus-4-7
 pi --provider bugteam-linuxdo --model gpt-5.4
-pi --provider openai-777358 --model gpt-5.5
-pi --provider claude-routerpark-bbs --model claude-sonnet-4-6
 ```
 
 ---
@@ -145,10 +146,12 @@ Claude 中转          — Relay specifici
 
 | Servizio | Provider Pi | Modelli | Ruolo |
 |----------|-------------|---------|-------|
-| **Anbalu** | `openai-anbalu` | GPT-5.5, 5.4, 5.4-mini, 5.3-codex | **Default Pi** + Codex |
+| **AnyRouter** | `claude-anyrouter` | Claude Haiku/Sonnet/Opus | **Default Pi** + Claude CLI |
+| **Anbalu** | `openai-anbalu` | GPT-5.5, 5.4, 5.4-mini, 5.3-codex | Backup GPT + Codex |
 | **知界API (ZhiJie)** | `openai-zjapi` | GPT-5.4, 5.4-mini, 5.3-codex | Backup GPT |
 | **FreeModel** | `openai-freemodel` | GPT-5.x, Codex | In Pi (non default) |
-| **RouterPark** | `claude-routerpark` / `-bbs` | Claude Opus/Sonnet/Haiku | **Claude CLI = BBS** |
+| **RouterPark** | `claude-routerpark` / `-bbs` | Claude Opus/Sonnet/Haiku | Backup Claude |
+| **MiMo (Xiaomi)** | `mimo-cn` | mimo-v2.5-pro, mimo-v2.5 | Giveaway RouterPark BBS ✅ |
 | **iamhc** | `minimax-iamhc` | MiniMax-M3, Kimi, GLM | |
 | **52mx** | `52model` | GPT-5.3-codex | |
 | **Bluesminds** | `bluesminds` | Qwen, GLM | |
@@ -164,7 +167,7 @@ Claude 中转          — Relay specifici
 
 | Servizio | Provider Pi | Note |
 |----------|-------------|------|
-| **Xiaomi Token Plan** | `xiaomi-sgp/cn-scadenza-10giugno` | MiMo V2.5, scade 10/06 |
+| **DeepSeek ufficiale** | `deepseek` | V4 Flash/Pro | Manca `DEEPSEEK_API_KEY` |
 | **MiniMax forum** | `minimax-cn` | MiniMax-M2.7 |
 | **Grok self-hosted** | `grok2api-local` | 150 SSO, WARP |
 

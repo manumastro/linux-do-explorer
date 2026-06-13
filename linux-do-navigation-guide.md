@@ -203,6 +203,8 @@ Quando trovi un post con URL + API key in **福利羊毛**, verifica e integra s
 
 | Post (esempio) | Provider Pi | Endpoint | Stato |
 |----------------|-------------|----------|-------|
+| RouterPark BBS MiMo (2026-06-13) | `mimo-cn` | `token-plan-cn.xiaomimimo.com/v1` | ✅ Testato |
+| RouterPark BBS DeepSeek (2026-06-13) | — | `routerpark.com` / `api.deepseek.com` | ❌ Key post invalid; usare API ufficiale |
 | BUG TEAM 2000 account (2026-06-09) | `bugteam-linuxdo` | `test-ai.833323.xyz/v1` | ✅ Temporaneo, no immagini |
 | api.777358 giveaway | `openai-777358` | `api.777358.xyz/v1` | ✅ Quota condivisa |
 
@@ -210,4 +212,4 @@ Quando trovi un post con URL + API key in **福利羊毛**, verifica e integra s
 
 ---
 
-*Guida aggiornata il 2026-06-09 — stack VPS: `VPS-STACK-RELAY.md`*
+*Guida aggiornata il 2026-06-13 — stack VPS: `VPS-STACK-RELAY.md`*

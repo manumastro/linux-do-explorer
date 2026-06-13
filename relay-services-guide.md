@@ -197,16 +197,19 @@ La maggior parte dei relay accetta:
 
 | Provider ID | Base URL | Tipo | Note |
 |-------------|----------|------|------|
-| `openai-anbalu` | api.anbalu.top/v1 | openai-responses | **Default Pi** |
+| `claude-anyrouter` | anyrouter.top | anthropic-messages | **Default Pi** (haiku; opus-4-6 offline) |
+| `openai-anbalu` | api.anbalu.top/v1 | openai-responses | Backup GPT |
 | `openai-zjapi` | zjapi.com/v1 | openai-responses | |
 | `openai-freemodel` | api.freemodel.dev | openai-responses | |
 | `openai-777358` | api.777358.xyz/v1 | openai-completions | Giveaway linux.do |
 | `bugteam-linuxdo` | test-ai.833323.xyz/v1 | openai-completions | BUG TEAM, temporaneo, no immagini |
 | `claude-routerpark` | routerpark.com/v1 | openai-completions | Account personale |
-| `claude-routerpark-bbs` | routerpark.com/v1 | openai-completions | **Claude CLI attivo** |
+| `claude-routerpark-bbs` | routerpark.com/v1 | openai-completions | Backup Claude BBS |
+| `mimo-cn` | token-plan-cn.xiaomimimo.com/v1 | openai-completions | MiMo V2.5 Pro (RouterPark BBS ✅) |
+| `deepseek-free` | api.deepseek.com/anthropic | anthropic-messages | Key invalida — usare `deepseek` + key ufficiale |
 | `minimax-iamhc` | api.iamhc.cn | anthropic-messages | MiniMax-M3 |
 | `minimax-cn` | api.minimaxi.com/anthropic | anthropic-messages | MiniMax-M2.7 |
-| `xiaomi-sgp/cn-scadenza-10giugno` | token-plan-*.xiaomimimo.com/v1 | openai-completions | MiMo V2.5, scade 10/06 |
+| `deepseek` (built-in Pi) | api.deepseek.com | openai-completions | V4 Flash/Pro — serve `DEEPSEEK_API_KEY` |
 | `bluesminds` | api.bluesminds.com/v1 | openai-completions | Qwen, GLM |
 | `52model` | 52mx.net/v1 | openai-responses | Codex |
 | `grok2api-local` | 127.0.0.1:8000/v1 | openai-completions | Self-hosted |

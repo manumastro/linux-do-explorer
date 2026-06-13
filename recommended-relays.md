@@ -77,8 +77,8 @@
 
 | App | Provider | Modello | URL |
 |-----|----------|---------|-----|
-| **Pi** | `openai-anbalu` | `gpt-5.4-mini` | [api.anbalu.top/v1](https://api.anbalu.top/v1) |
-| **Claude Code** | RouterPark BBS | `claude-sonnet-4-6` | [routerpark.com](https://routerpark.com) |
+| **Pi** | `claude-anyrouter` | `claude-haiku-4-5-20251001` | [anyrouter.top](https://anyrouter.top) |
+| **Claude Code** | AnyRouter | `claude-haiku-4-5-20251001` | [anyrouter.top](https://anyrouter.top) |
 | **Codex** | Anbalu | `gpt-5.5` | [api.anbalu.top/v1](https://api.anbalu.top/v1) |
 
 ### Altri relay in Pi (account propri)
@@ -86,13 +86,15 @@
 | Servizio | Provider Pi | Modelli | Note |
 |----------|-------------|---------|------|
 | **知界API (ZhiJie)** | `openai-zjapi` | GPT-5.4, 5.4-mini, 5.3-codex | Taobao |
-| **Anbalu** | `openai-anbalu` | GPT-5.2–5.5, Codex | **Default Pi** |
+| **AnyRouter** | `claude-anyrouter` | Claude 4.x (haiku OK; opus-4-6 offline) | **Default Pi** |
+| **Anbalu** | `openai-anbalu` | GPT-5.2–5.5, Codex | Backup GPT |
 | **FreeModel** | `openai-freemodel` | GPT-5.x, Codex | In catalogo, non default Claude |
 | **RouterPark** | `claude-routerpark` / `-bbs` | Claude 4.x | BBS attivo in Claude CLI |
 | **iamhc** | `minimax-iamhc` | MiniMax-M3, Kimi, GLM | |
 | **52mx** | `52model` | GPT-5.3-codex | |
 | **Bluesminds** | `bluesminds` | Qwen, GLM | |
-| **Xiaomi Token Plan** | `xiaomi-sgp/cn-*` | MiMo V2.5 | Scade 10/06 |
+| **MiMo Token Plan CN** | `mimo-cn` | mimo-v2.5-pro | RouterPark BBS 2026-06-13 ✅ |
+| **DeepSeek ufficiale** | `deepseek` | V4 Flash/Pro | Serve key platform.deepseek.com |
 | **Grok** | `grok2api-local` | grok-4.3-console, multi-agent | Self-hosted |
 
 ### Giveaway linux.do (temporanei)
@@ -101,6 +103,8 @@
 |----------|-------------|-----|---------|------|
 | **BUG TEAM** | `bugteam-linuxdo` | `test-ai.833323.xyz` | GPT-5.5, 5.4, Codex | No immagini; 429 possibili |
 | **api.777358** | `openai-777358` | `api.777358.xyz` | GPT-5.5, 5.4, Codex | Quota condivisa |
+| **MiMo RouterPark BBS** | `mimo-cn` | `token-plan-cn.xiaomimimo.com` | mimo-v2.5-pro | ✅ Testato 2026-06-13 |
+| **DeepSeek RouterPark BBS** | — | `routerpark.com` | deepseek-v4-flash | ❌ Key post invalid |
 
 ### Rimosso da Pi
 
@@ -110,4 +114,4 @@
 
 ---
 
-*File aggiornato il 2026-06-09 — allineato a `VPS-STACK-RELAY.md`*
+*File aggiornato il 2026-06-13 — allineato a `VPS-STACK-RELAY.md`*

@@ -1,6 +1,6 @@
 # 📚 AGENTS.md — Come Esplorare il Mercato Grigio API AI
 
-**Data:** 2026-06-09
+**Data:** 2026-06-13
 
 ---
 
@@ -117,12 +117,12 @@ Trovare **relay services (中转站)** affidabili che diano accesso a modelli AI
 
 | App | Default | Endpoint |
 |-----|---------|----------|
-| **Pi** | `openai-anbalu` / `gpt-5.4-mini` | `https://api.anbalu.top/v1` |
-| **Claude Code** | `claude-sonnet-4-6` | RouterPark BBS → `https://routerpark.com` |
+| **Pi** | `claude-anyrouter` / `claude-haiku-4-5-20251001` | `https://anyrouter.top` |
+| **Claude Code** | `claude-haiku-4-5-20251001` | AnyRouter → `https://anyrouter.top` |
 | **Codex** | `gpt-5.5` | Anbalu → `https://api.anbalu.top/v1` |
 | **Pi (Grok)** | `grok-4.3-console` on demand | `grok2api-local` → `http://127.0.0.1:8000/v1` |
 
-**Giveaway linux.do in Pi (temporanei):** `bugteam-linuxdo` (`test-ai.833323.xyz`), `openai-777358` (`api.777358.xyz`).
+**Giveaway attivi in Pi:** `mimo-cn` (MiMo RouterPark BBS 2026-06-13), `bugteam-linuxdo`, `openai-777358`. **DeepSeek ufficiale:** endpoint pronto, manca key.
 
 **Rimosso da Pi:** `lyclaude` (hotaruapi.com — disattivato 2026-06-09).
 
@@ -335,4 +335,4 @@ Claude 中转           — Relay specifici
 
 ---
 
-*Guida aggiornata il 2026-06-09 — stack VPS allineato a `VPS-STACK-RELAY.md`*
+*Guida aggiornata il 2026-06-13 — stack VPS allineato a `VPS-STACK-RELAY.md`*

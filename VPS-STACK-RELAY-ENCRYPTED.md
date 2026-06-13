@@ -1,7 +1,7 @@
 # VPS — Stack AI, relay e configurazioni
 
 **Host:** `vmi2825141` (Ubuntu, user `manu`)  
-**Data documento:** 2026-06-09
+**Data documento:** 2026-06-13
 **Ambito:** tutto ciò che gira su **questo VPS** (Pi, Claude Code, Codex, chiavi in `~/.pi/agent`, `~/.claude`, `~/.codex`).
 
 > 🔐 **Sicurezza:** questo file contiene **password e chiavi API crittografate**. Per decrittografare: `python3 encrypt_vps_v2.py decrypt VPS-STACK-RELAY-ENCRYPTED.md`
@@ -24,8 +24,8 @@
 
 | App | File config | Provider / endpoint | Modello default |
 |-----|-------------|---------------------|-----------------|
-| **Pi** | `~/.pi/agent/settings.json` | `openai-anbalu` → `https://api.anbalu.top/v1` | `gpt-5.4-mini` |
-| **Claude Code** | `~/.claude/settings.json` | **RouterPark BBS** → `https://routerpark.com` | `claude-sonnet-4-6` |
+| **Pi** | `~/.pi/agent/settings.json` | **AnyRouter** → `claude-anyrouter` · `https://anyrouter.top` | `claude-haiku-4-5-20251001` |
+| **Claude Code** | `~/.claude/settings.json` | **AnyRouter** → `https://anyrouter.top` | `claude-haiku-4-5-20251001` |
 | **Codex** | `~/.codex/config.toml` | **Anbalu** → `https://api.anbalu.top/v1` | `gpt-5.5` |
 | **Pi (Grok)** | `~/.pi/agent/models.json` | **grok2api-local** → `http://127.0.0.1:8000/v1` | `grok-4.3-console` (on demand) |
 
@@ -53,11 +53,15 @@ Legenda: ✅ configurato e testato · 🟡 account / chiave nota, **non** in con
 
 | Servizio | Uso | Note |
 |----------|-----|------|
+| **AnyRouter** `https://anyrouter.top` | **Pi default** + **Claude CLI** · `claude-anyrouter` | Key `sk-FVnK…` (trapbeats1212, quota illimitata); extension `anyrouter-claude-code-compat`; **opus-4-6 offline** → usare **opus-4-7/4-8**; sonnet/opus richiedono beta **`context-1m-2025-08-07`** (haiku OK senza 1M) |
+| **MiMo Token Plan CN** | Pi `mimo-cn` | Giveaway RouterPark BBS 2026-06-13 · `tp-c4lk…` · endpoint ufficiale `token-plan-cn.xiaomimimo.com/v1` · ✅ testato |
+| **DeepSeek ufficiale** | Pi built-in `deepseek` + custom `deepseek-free` | Endpoint `api.deepseek.com` · **nessuna key valida sul VPS** (serve `DEEPSEEK_API_KEY` da [platform.deepseek.com](https://platform.deepseek.com/api_keys)) |
+| **Zebra API** `https://bmapi.020212.xyz/v1` | Pi `openai-zebra` | GPT 5.3–5.5 via `openai-responses`; account trapbeats1212 PLUS |
 | **grok2api-local** `http://127.0.0.1:8000/v1` | Pi Grok console + multi-agent | 150 SSO da `grok_register/`; stack Docker WARP; guida `GROK2API-DEPLOY.md` |
-| **RouterPark** `https://routerpark.com/v1` | Pi Claude (2 provider) + **Claude CLI** | Account `sk-HhQF…` + BBS `sk-P42A…` (attivo); API Pi = **openai-completions** |
+| **RouterPark** `https://routerpark.com/v1` | Pi Claude (2 provider) | Account `sk-HhQF…` + BBS `sk-P42A…`; API Pi = **openai-completions** |
 | **api.777358.xyz** `https://api.777358.xyz/v1` | Pi `openai-777358` | Giveaway linux.do; key in `auth.json` |
 | **BUG TEAM** `https://test-ai.833323.xyz/v1` | Pi `bugteam-linuxdo` | Giveaway linux.do (2026-06-09); sito temporaneo, no immagini |
-| **Xiaomi Token Plan** SGP + CN | Pi `xiaomi-sgp/cn-scadenza-10giugno` | MiMo V2.5; scadenza 10/06 |
+| **Xiaomi Token Plan** SGP + CN | Pi `mimo-cn` (+ legacy `xiaomi-sgp/cn-scadenza-10giugno` scaduti 10/06) | MiMo V2.5 / V2.5 Pro; **attivo:** key BBS `tp-c4lk…` |
 | **MiniMax ufficiale CN** `https://api.minimaxi.com/anthropic` | Pi `minimax-cn` | `MiniMax-M2.7` (key forum RouterPark) |
 | **OpenAI Codex OAuth** | Pi `openai-codex`, `openai-codex-2` | Account ChatGPT Plus collegati in `auth.json` |
 | **OpenCode / OpenCode-Go** | Pi `opencode`, `opencode-go` | Key in `auth.json` (non è uno dei siti nella tabella) |
@@ -75,23 +79,25 @@ Legenda: ✅ configurato e testato · 🟡 account / chiave nota, **non** in con
 | `models.json` | Provider custom (URL, modelli, `authHeader`, headers) |
 | `auth.json` | API key e OAuth per provider |
 
-### 4.1 Default Pi (2026-06-09)
+### 4.1 Default Pi (2026-06-13)
 
 ```json
-"defaultProvider": "openai-anbalu",
-"defaultModel": "gpt-5.4-mini"
+"defaultProvider": "claude-anyrouter",
+"defaultModel": "claude-haiku-4-5-20251001",
+"defaultThinkingLevel": "medium"
 ```
 
 Comando rapido:
 
 ```bash
-pi                                    # GPT-5.4-mini via Anbalu (default)
+pi                                    # Claude Haiku via AnyRouter (default)
+pi --provider openai-anbalu --model gpt-5.4-mini   # GPT backup Anbalu
+pi --provider mimo-cn --model mimo-v2.5-pro        # MiMo giveaway RouterPark BBS
+pi --provider claude-anyrouter --model claude-opus-4-7   # AnyRouter opus (richiede 1M beta; può 503)
+pi --provider claude-routerpark --model claude-sonnet-4-6    # account RouterPark
 pi --provider bugteam-linuxdo --model gpt-5.4    # BUG TEAM giveaway linux.do
 pi --provider openai-777358 --model gpt-5.5      # api.777358.xyz giveaway
-pi --provider xiaomi-cn-scadenza-10giugno --model mimo-v2.5    # MiMo via CN (scade 10/06)
-pi --provider claude-routerpark --model claude-sonnet-4-6    # tuo account RouterPark
-pi --provider claude-routerpark-bbs --model claude-sonnet-4-6   # key giveaway BBS
-pi --model claude-routerpark/claude-opus-4-8
+pi --provider deepseek --model deepseek-v4-flash  # API ufficiale (serve key in auth.json)
 ```
 
 ### 4.2 Provider in `models.json` (relay a pagamento / custom)
@@ -103,8 +109,9 @@ pi --model claude-routerpark/claude-opus-4-8
 | `openai-freemodel` | `https://api.freemodel.dev` | openai-responses | gpt-5.5, gpt-5.4, gpt-5.3-codex, … | Key in `models.json` |
 | `bluesminds` | `https://api.bluesminds.com/v1` | openai-completions | qwen3.6-plus, qwen3.6-max-preview, glm-5.1 | Key in `models.json` |
 | `52model` | `https://52mx.net/v1` | openai-responses | gpt-5.3-codex | Key in `models.json` |
-| `xiaomi-sgp-scadenza-10giugno` | `https://token-plan-sgp.xiaomimimo.com/v1` | openai-completions | MiMo V2.5, V2.5 Pro, V2 Pro, V2 Omni | ✅ `tp-s94z…` (scadenza 10/06) |
-| `xiaomi-cn-scadenza-10giugno` | `https://token-plan-cn.xiaomimimo.com/v1` | openai-completions | MiMo V2.5, V2.5 Pro, V2 Pro, V2 Omni | ✅ `tp-cgqr…` (scadenza 10/06, ~10B credits) |
+| `mimo-cn` | `https://token-plan-cn.xiaomimimo.com/v1` | openai-completions | **mimo-v2.5-pro**, mimo-v2.5 | ✅ `tp-c4lk…` (RouterPark BBS 2026-06-13) |
+| `deepseek-free` | `https://api.deepseek.com/anthropic` | anthropic-messages | deepseek-v4-pro, deepseek-v4-flash | 🟡 key `sk-4afa…` **invalida** — usare provider built-in `deepseek` + key ufficiale |
+| ~~`xiaomi-sgp/cn-scadenza-10giugno`~~ | token-plan-*.xiaomimimo.com/v1 | openai-completions | MiMo V2.5 | ❌ scaduti 10/06 |
 | `claude-routerpark` | `https://routerpark.com/v1` | **openai-completions** | claude-opus-4-8, claude-sonnet-4-6, claude-haiku-4-5-… | ✅ account `sk-HhQF…` |
 | `claude-routerpark-bbs` | `https://routerpark.com/v1` | **openai-completions** | stessi modelli (label · BBS) | ✅ giveaway `sk-P42A…` (attivo CLI) |
 | `minimax-iamhc` | `https://api.iamhc.cn` | anthropic-messages | **MiniMax-M3**, glm-5.1, Kimi-K2.5/2.6 | ✅ `sk-41Ek…` |
@@ -112,6 +119,9 @@ pi --model claude-routerpark/claude-opus-4-8
 | `openai-777358` | `https://api.777358.xyz/v1` | openai-completions | gpt-5.5, gpt-5.4, gpt-5.4-mini, gpt-5.3-codex, … | ✅ `$API_777358_KEY` |
 | `bugteam-linuxdo` | `https://test-ai.833323.xyz/v1` | openai-completions | gpt-5.5, gpt-5.4, gpt-5.4-mini, gpt-5.3-codex, … | Key in `models.json` (giveaway) |
 | `grok2api-local` | `http://127.0.0.1:8000/v1` | openai-completions | grok-4.3-console, grok-4.20-multi-agent-xhigh, … | ✅ `grok-local-…` |
+| `openai-zebra` | `https://bmapi.020212.xyz/v1` | openai-responses | gpt-5.3-codex, gpt-5.3-codex-spark, gpt-5.4, gpt-5.4-mini, gpt-5.5 | Key in `models.json` |
+| `claude-anyrouter` | `https://anyrouter.top` | anthropic-messages | claude-haiku-4-5-… ✅, claude-sonnet-4-5-…, claude-opus-4-7/4-8 (1M) | Key in `models.json`; header `anthropic-beta` include **`context-1m-2025-08-07`**; ~~opus-4-6~~ rimosso (offline) |
+| `openai-anyrouter` | `https://anyrouter.top/v1` | openai-responses | gpt-5-codex, gpt-5.5 | Key in `models.json` (instabile / overload); **non** default GPT Pi |
 
 **Comandi Grok (Pi):**
 
@@ -157,7 +167,7 @@ Deploy e import SSO: vedi `linux-do-explorer/GROK2API-DEPLOY.md`.
 
 - `pi-qwen-oauth`, `pi-context-saver`, `context-guard-wrapper`
 - `pi-dcp`, `codex-multi-account` *(no `custom-free-models` — free tier disattivato)*
-- `claude-code-multi-account`, `@ramarivera/pi-grok-build`
+- `claude-code-multi-account`, `anyrouter-claude-code-compat`, `@ramarivera/pi-grok-build`
 
 ---
 
@@ -171,34 +181,37 @@ Deploy e import SSO: vedi `linux-do-explorer/GROK2API-DEPLOY.md`.
 | `~/.claude/profiles.json` | **Catalogo** di tutti i profili disponibili (sorgente di verità) |
 | `~/.pi/agent/extensions/claude-code-multi-account/index.ts` | Definizione profili + comandi `/claude-*` in Pi |
 
-### 5.2 Profilo attivo (2026-06-09)
+### 5.2 Profilo attivo (2026-06-13)
 
-**`claude-routerpark-bbs`** — key cpass giveaway del post RouterPark.
+**`claude-anyrouter`** — AnyRouter linux.do (account trapbeats1212, quota illimitata).
 
 ```json
 {
   "env": {
-    "ANTHROPIC_AUTH_TOKEN": "ENC:VvyOQzK/1mYPG4jYOISsHVc7kJAEOe+e8UvJwnS4I3ZQ8ft0Td6uRShnsJotjoI6czme",
-    "ANTHROPIC_BASE_URL": "https://routerpark.com",
+    "ANTHROPIC_AUTH_TOKEN": "ENC:VvyOVVDj3DwSIYzKbYSSHmwA8rYKMbL66Rrx0WDAAy5AxeBRMc/TVDQmn+EUttgoQBu1",
+    "ANTHROPIC_BASE_URL": "https://anyrouter.top",
     "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": "1"
   },
-  "model": "claude-sonnet-4-6"
+  "model": "claude-haiku-4-5-20251001"
 }
 ```
 
 | Aspetto | Valore |
 |---------|--------|
-| Relay attivo | **RouterPark BBS** (cpass whitedream, 0.2x, quota condivisa) |
-| Saldo stimato | ~18.5M token (da risposta API) |
-| Modelli validi | `claude-sonnet-4-6`, `claude-opus-4-8`, `claude-haiku-4-5-20251001` |
-| ❌ Non usare | `sonnet`, `haiku`, `opus` (alias corti → 503 su RouterPark) |
+| Relay attivo | **AnyRouter** (`https://anyrouter.top`) |
+| Login console | GitHub / linux.do — **trapbeats1212@gmail.com** |
+| Modelli testati | `claude-haiku-4-5-20251001` ✅ (default Pi + CLI) |
+| Sonnet/Opus | Richiedono beta **`context-1m-2025-08-07`** in Pi (`models.json`); senza → `1m 上下文已经全量可用`; con beta → a volte **503** (backend 1M AnyRouter sovraccarico) |
+| Opus 4.6 | **Offline** su AnyRouter (`claude-opus-4-6 已下线`) → usare **opus-4-7** o **opus-4-8** |
+| Backup relay | `claude-routerpark` (account RouterPark) in `profiles.json` |
 
 ### 5.3 Tutti i profili disponibili
 
 | Profilo | Relay | Key | Modello default | Switch |
 |---------|-------|-----|-----------------|--------|
-| `claude-routerpark-bbs` | RouterPark BBS | `sk-P42A...` | `claude-sonnet-4-6` | **ATTIVO** |
+| `claude-anyrouter` | AnyRouter | `sk-FVnK...` | `claude-sonnet-4-5-20250929` | **ATTIVO** |
 | `claude-routerpark` | RouterPark account | `sk-HhQF...` | `claude-sonnet-4-6` | `/claude-external claude-routerpark` |
+| `claude-routerpark-bbs` | RouterPark BBS | `sk-P42A...` | `claude-sonnet-4-6` | `/claude-external claude-routerpark-bbs` |
 | `claude-freemodel` | FreeModel | `fe_oa_...` | `sonnet` | `/claude-external claude-freemodel` |
 
 Ogni profilo ha la config completa in `~/.claude/profiles.json` → `profiles.<nome>.settings`.
@@ -207,16 +220,20 @@ Ogni profilo ha la config completa in `~/.claude/profiles.json` → `profiles.<n
 
 ```text
 /claude-list                              # elenca profili + segna quello attivo
-/claude-external claude-routerpark-bbs    # attiva BBS (default)
-/claude-external claude-routerpark        # passa all'account personale
+/claude-external claude-anyrouter         # attiva AnyRouter (default)
+/claude-external claude-routerpark        # passa all'account RouterPark
+/claude-external claude-routerpark-bbs    # passa a BBS giveaway
 /claude-external claude-freemodel         # torna a FreeModel
-/claude claude-routerpark-bbs             # switch + avvia claude CLI
+/claude claude-anyrouter                  # switch + avvia claude CLI
 ```
 
 Dopo `/claude-external <nome>`, lancia `claude` in un altro terminale.
 
 ### 5.5 Note tecniche
 
+- **AnyRouter** accetta solo traffico **Claude Code** (non API generiche). Claude CLI funziona con `ANTHROPIC_BASE_URL=https://anyrouter.top`.
+- **Pi + AnyRouter:** provider `claude-anyrouter` (`anthropic-messages`). Senza fix, Pi invia `eager_input_streaming: true` sui tool → AnyRouter risponde 429/520. Risolto con extension **`~/.pi/agent/extensions/anyrouter-claude-code-compat/`** (hook `before_provider_request`: rimuove `eager_input_streaming`, rinomina tool in stile Claude Code, aggiunge identity system). Header `anthropic-beta` in `models.json` include **`context-1m-2025-08-07`**; `contextWindow` sonnet/opus = **1M**.
+- **`openai-anyrouter`:** configurato per GPT (`gpt-5-codex`, `gpt-5.5`) ma **non** è il default GPT di Pi (GPT backup: Anbalu / ZjAPI).
 - RouterPark in **Pi** usa `openai-completions` su `/v1/chat/completions` (più stabile in TUI).
 - RouterPark in **Claude Code CLI** usa endpoint Anthropic su `https://routerpark.com` + `ANTHROPIC_AUTH_TOKEN`.
 - FreeModel usa `apiKeyHelper` + alias corti (`sonnet`, `opus`) — funzionano solo su `cc.freemodel.dev`.
@@ -240,6 +257,55 @@ base_url = "https://api.anbalu.top/v1"
 **Non configurato su VPS:** relay Codex del post RouterPark (`https://v2api.top/`, whitedream, `sub.ranai.chat`).
 
 Script sync Codex OAuth → Pi: `~/.pi/agent/bin/sync-codex-to-pi-slot.sh`
+
+---
+
+## 6b. DeepSeek — API ufficiale (2026-06-13)
+
+| Formato | Base URL | Modelli | Stato VPS |
+|---------|----------|---------|-----------|
+| **OpenAI** | `https://api.deepseek.com` | `deepseek-v4-flash`, `deepseek-v4-pro` | Endpoint ✅ online; **nessuna key valida** in `auth.json` |
+| **Anthropic** | `https://api.deepseek.com/anthropic` | stessi | Provider custom `deepseek-free` — key `sk-4afa…` **401 invalid** |
+| **Pi built-in** | `deepseek` (catalogo Pi) | V4 Flash/Pro, 1M context | Richiede `DEEPSEEK_API_KEY` in `auth.json` o env |
+
+**Test 2026-06-13:**
+
+- Key RouterPark BBS giveaway `sk-Drwue…` → **401** su `routerpark.com` e su API ufficiale (non è key DeepSeek).
+- Account RouterPark `sk-HhQF…` → Claude OK; modelli `deepseek-v4-*` → **503** `No available channel` (gruppo kiro senza canale DeepSeek).
+
+**Per attivare:**
+
+```bash
+# 1. Genera key su https://platform.deepseek.com/api_keys
+# 2. Aggiungi in ~/.pi/agent/auth.json → "deepseek": { "type": "api_key", "key": "sk-..." }
+pi --provider deepseek --model deepseek-v4-flash --print "ok"
+pi --provider deepseek --model deepseek-v4-pro --thinking high --print "ok"
+```
+
+Prezzi ufficiali: [api-docs.deepseek.com/quick_start/pricing](https://api-docs.deepseek.com/quick_start/pricing) (V4 Flash ~$0.14/1M input).
+
+---
+
+## 6c. MiMo — Token Plan CN (RouterPark BBS 2026-06-13)
+
+| Campo | Valore |
+|-------|--------|
+| Provider Pi | `mimo-cn` |
+| Endpoint ufficiale | `https://token-plan-cn.xiaomimimo.com/v1` |
+| API | `openai-completions` |
+| Key BBS | `tp-c4lkkglwlgvnegyeghfnicrtgzsujtf7fql8je0zlxncdjwb` |
+| Modelli testati | `mimo-v2.5-pro` ✅ · `mimo-v2.5` ✅ |
+| Auth | `~/.pi/agent/auth.json` → `mimo-cn` |
+
+```bash
+pi --provider mimo-cn --model mimo-v2.5-pro --print "ok"
+curl -s https://token-plan-cn.xiaomimimo.com/v1/chat/completions \
+  -H "Authorization: Bearer tp-c4lkkglwlgvnegyeghfnicrtgzsujtf7fql8je0zlxncdjwb" \
+  -H "Content-Type: application/json" \
+  -d '{"model":"mimo-v2.5-pro","max_tokens":32,"messages":[{"role":"user","content":"ok"}]}'
+```
+
+Post BBS: *白嫖$1000免费额度* (西瓜皮, 2026-06-13) — [routerpark.com/zh/bbs](https://routerpark.com/zh/bbs).
 
 ---
 
@@ -310,8 +376,8 @@ Non configurati su VPS. Per provare: registrazione su aicodelink ($1 test citato
 
 ### ✅ Usiamo (configurato + usato)
 
-- **Pi:** Anbalu (default), xiaomi Token Plan SGP/CN, RouterPark account + BBS, iamhc MiniMax-M3, ZjAPI, FreeModel, 52mx, Bluesminds, **openai-777358**, **bugteam-linuxdo**, **grok2api-local**, OAuth Codex/Qwen/Copilot/Gemini
-- **Claude Code:** RouterPark BBS (`claude-routerpark-bbs`)
+- **Pi:** **AnyRouter default** (`claude-anyrouter`), Anbalu, **mimo-cn** (MiMo BBS), **openai-zebra**, RouterPark account + BBS, iamhc MiniMax-M3, ZjAPI, FreeModel, 52mx, Bluesminds, **openai-777358**, **bugteam-linuxdo**, **grok2api-local**, OAuth Codex/Qwen/Copilot/Gemini
+- **Claude Code:** AnyRouter (`claude-anyrouter`, haiku default)
 - **Codex:** Anbalu
 
 ### 🟡 Abbiamo account / chiavi ma non integrati (o solo parziale)
@@ -319,6 +385,8 @@ Non configurati su VPS. Per provare: registrazione su aicodelink ($1 test citato
 - **MicuAPI** — login GitHub; nessun provider Pi
 - **RKAPI** — login console; nessun provider Pi
 - **api520.pro** — login; nessun provider Pi
+- **DeepSeek ufficiale** — provider Pi pronto (`deepseek`); manca key da [platform.deepseek.com](https://platform.deepseek.com/api_keys)
+- **DeepSeek RouterPark BBS** — key post `sk-Drwue…` **401 invalid**
 
 ### ❌ Non usiamo sul VPS (anche se nel post o in guide)
 
@@ -340,6 +408,12 @@ Non configurati su VPS. Per provare: registrazione su aicodelink ($1 test citato
 7. Deploy **grok2api** (fork jiujiu532, stack WARP), import 150 SSO, provider Pi **`grok2api-local`**.
 8. Provider **`openai-777358`** (giveaway linux.do) e **`bugteam-linuxdo`** (post BUG TEAM 2026-06-09, `test-ai.833323.xyz`).
 9. Rimosso **`lyclaude`** da Pi (hotaruapi.com — disattivato per ora).
+10. Aggiunto **Zebra API** (`openai-zebra`) — GPT 5.3/5.4/5.5 via `openai-responses`.
+11. Aggiunto **AnyRouter** in Claude Code CLI + Pi (`claude-anyrouter`, `openai-anyrouter`).
+12. Fix Pi AnyRouter: extension **`anyrouter-claude-code-compat`** rimuove `eager_input_streaming` dai tool (causa 429/520 su AnyRouter).
+13. **2026-06-13:** Pi default → **`claude-anyrouter`** / **`claude-haiku-4-5-20251001`**; AnyRouter **opus-4-6** rimosso (offline) → **opus-4-7**; beta **`context-1m-2025-08-07`** + `contextWindow` 1M per sonnet/opus.
+14. **2026-06-13:** Integrato **MiMo** giveaway RouterPark BBS (`mimo-cn`, key `tp-c4lk…`) — testato OK su endpoint ufficiale Xiaomi.
+15. **2026-06-13:** Test **DeepSeek** — key BBS RouterPark invalid; API ufficiale online ma **nessuna key valida** sul VPS; account RouterPark senza canale DeepSeek.
 
 ---
 
@@ -356,8 +430,14 @@ pi --provider claude-routerpark --model claude-sonnet-4-6 --print "ok"
 pi --provider claude-routerpark-bbs --model claude-sonnet-4-6 --print "ok"
 pi --provider minimax-iamhc --model MiniMax-M3 --print "ok"
 
-# Claude Code (config attuale RouterPark BBS)
+# Claude Code (config attuale AnyRouter)
 claude -p "ok"
+
+# Pi — AnyRouter (default) + MiMo + Zebra
+pi --provider claude-anyrouter --model claude-haiku-4-5-20251001 --print "ok"
+pi --provider mimo-cn --model mimo-v2.5-pro --print "ok"
+pi --provider openai-zebra --model gpt-5.4-mini --print "ok"
+pi --provider openai-anbalu --model gpt-5.4-mini --print "ok"
 
 # Codex (config attuale Anbalu)
 codex -p "ok"
@@ -403,6 +483,8 @@ Tutto ciò che è salvato su questo VPS al 2026-06-02. Per siti 🟡 senza riga 
 | 52mx | https://52mx.net/console | **manumastro** | `ENC:aPbNZjS9pzZSZw==` |
 | api520 | https://api520.pro/ | **trapbeats1212@gmail.com** | `ENC:aPbNZjS9pzZSZw==` |
 | iamhc | https://api.iamhc.cn/console | **trapbeats1212@gmail.com** | `ENC:aPbNZjS9pzZSZw==` |
+| AnyRouter | https://anyrouter.top | **trapbeats1212@gmail.com** (linux.do/GitHub) | (login forum) |
+| Zebra API | https://bmapi.020212.xyz | **trapbeats1212@gmail.com** | `ENC:aPbNZjS9pzZSZw==` |
 
 ### 13.2 API key relay — Pi `~/.pi/agent/models.json`
 
@@ -414,6 +496,9 @@ Tutto ciò che è salvato su questo VPS al 2026-06-02. Per siti 🟡 senza riga 
 | `bluesminds` | `https://api.bluesminds.com/v1` | `ENC:VvyOa0L82047FNDYLb2NFEVElK4EBLXry0mIz16fGi5J/MxZPsncaRoviPwVhJgKUwKv` |
 | `52model` | `https://52mx.net/v1` | `ENC:VvyOcla/+0YVJtnNOY6sEjIooKoNM+HA0UTj0A2dFFJg0/pSP++jSjkS2tEbuZIKchq3` |
 | `bugteam-linuxdo` | `https://test-ai.833323.xyz/v1` | `ENC:VvyOd2O+9jMAbNjLZ5DbSTVA9KMNabXL2kuKlQvFWSMS88UkMbmlPVFk35lskohNMUH39Fg7sJ+PHI+WXMsPcx2hkQ==` |
+| `openai-zebra` | `https://bmapi.020212.xyz/v1` | `ENC:VvyOITXro2FbMI2cbMaLG2VE9P4IPLOTjEyDlAiUCi8T8Zt2Y76hMgBk3s9tx9wYZ0n39As548iJGtnHDMsMIROmxw==` |
+| `claude-anyrouter` | `https://anyrouter.top` | `ENC:VvyOVVDj3DwSIYzKbYSSHmwA8rYKMbL66Rrx0WDAAy5AxeBRMc/TVDQmn+EUttgoQBu1` |
+| `openai-anyrouter` | `https://anyrouter.top/v1` | `ENC:VvyOVVDj3DwSIYzKbYSSHmwA8rYKMbL66Rrx0WDAAy5AxeBRMc/TVDQmn+EUttgoQBu1` |
 
 In `models.json` i provider sotto usano placeholder; la key reale è in `auth.json`:
 
@@ -423,35 +508,44 @@ In `models.json` i provider sotto usano placeholder; la key reale è in `auth.js
 | `claude-routerpark-bbs` | `$ROUTERPARK_BBS_API_KEY` | `ENC:VvyOQzK/1mYPG4jYOISsHVc7kJAEOe+e8UvJwnS4I3ZQ8ft0Td6uRShnsJotjoI6czme` |
 | `minimax-iamhc` | `$MINIMAX_IAMHC_API_KEY` | `ENC:VvyOJzfI/FFVEKznNJ+pCVgQlp8dZbbC1nvf5GqHWVBf8dZYfP/ibzAe3fs0pIE/UQOD` |
 | `openai-777358` | `$API_777358_KEY` | `ENC:VvyOKzG08T1QYI/PapCMTWdE8aNba7Wdj0nawgvCWXYTpMIhY7r2NVo00Z5tldpAYED0pF5t486OSN/HX8UIcRf1lg==` |
-| `xiaomi-sgp-scadenza-10giugno` | `$TOKEN_PLAN_SGP_KEY` | `tp-s94zhtmxe9ljhh8rp03m23dlxate6h88ksnfjr14a3mk73iy` |
-| `xiaomi-cn-scadenza-10giugno` | (key diretta in `models.json`) | `tp-cgqragt586ex6styk56p4uiiypibfslm4iou1pdw33rlt51w` |
+| `mimo-cn` | `$MIMO_CN_API_KEY` | `tp-c4lkkglwlgvnegyeghfnicrtgzsujtf7fql8je0zlxncdjwb` |
+| `deepseek-free` | `$DEEPSEEK_FREE_API_KEY` | `ENC:VvyOJ2fr9jdSbNGbPsKPTTZH9aZcZeaS20uIlFqRWnIUpcI=` (**invalida** — sostituire con key ufficiale) |
 | `grok2api-local` | `$GROK2API_API_KEY` | `ENC:QuXMeCvh+GcCOcTNb5bZHzMTpfJWa7TOiRWKx1yXCCQc9JZ3P+jxMFBh3w==` |
 
 ### 13.3 API key — Pi `~/.pi/agent/auth.json` (altri provider)
 
-| Provider | Key |
-|----------|-----|
-| `opencode` | `ENC:VvyOXXD73D0iN4TIKbytHzI7jbAtDLbjyUnD+067HWMS2OJXR8PZdCQdg+4Rpb8YNT+D8Qg/x+zqQP6UcbojdmCnzQ==` |
-| `opencode-go` | `ENC:VvyOXXD73D0iN4TIKbytHzI7jbAtDLbjyUnD+067HWMS2OJXR8PZdCQdg+4Rpb8YNT+D8Qg/x+zqQP6UcbojdmCnzQ==` |
+| Provider | Key | Stato |
+|----------|-----|-------|
+| `opencode` | `ENC:VvyOXXD73D0iN4TIKbytHzI7jbAtDLbjyUnD+067HWMS2OJXR8PZdCQdg+4Rpb8YNT+D8Qg/x+zqQP6UcbojdmCnzQ==` | saldo insufficiente |
+| `opencode-go` | `ENC:VvyOXXD73D0iN4TIKbytHzI7jbAtDLbjyUnD+067HWMS2OJXR8PZdCQdg+4Rpb8YNT+D8Qg/x+zqQP6UcbojdmCnzQ==` | saldo insufficiente |
+| `mimo-cn` | `tp-c4lkkglwlgvnegyeghfnicrtgzsujtf7fql8je0zlxncdjwb` | ✅ RouterPark BBS 2026-06-13 |
+| `deepseek-free` | `ENC:VvyOJ2fr9jdSbNGbPsKPTTZH9aZcZeaS20uIlFqRWnIUpcI=` | ❌ invalida su API ufficiale |
 
 ### 13.4 Claude Code — profili (`~/.claude/`)
 
-**Attivo:** `claude-routerpark-bbs` in `settings.json`
+**Attivo:** `claude-anyrouter` in `settings.json`
 
 | Campo | Valore |
 |-------|--------|
-| `ANTHROPIC_BASE_URL` | `https://routerpark.com` |
-| `ANTHROPIC_AUTH_TOKEN` | `ENC:VvyOQzK/1mYPG4jYOISsHVc7kJAEOe+e8UvJwnS4I3ZQ8ft0Td6uRShnsJotjoI6czme` |
-| Modello | `claude-sonnet-4-6` |
+| `ANTHROPIC_BASE_URL` | `https://anyrouter.top` |
+| `ANTHROPIC_AUTH_TOKEN` | `ENC:VvyOVVDj3DwSIYzKbYSSHmwA8rYKMbL66Rrx0WDAAy5AxeBRMc/TVDQmn+EUttgoQBu1` |
+| Modello | `claude-haiku-4-5-20251001` |
 
-**Catalogo completo:** `~/.claude/profiles.json` (contiene anche FreeModel e RouterPark account).
+**Catalogo completo:** `~/.claude/profiles.json` (contiene anche RouterPark account).
 
 Env manuale equivalente (profilo attivo):
 
 ```bash
-export ANTHROPIC_BASE_URL="https://routerpark.com"
-export ANTHROPIC_AUTH_TOKEN="ENC:VvyOQzK/1mYPG4jYOISsHVc7kJAEOe+e8UvJwnS4I3ZQ8ft0Td6uRShnsJotjoI6czme"
+export ANTHROPIC_BASE_URL="https://anyrouter.top"
+export ANTHROPIC_AUTH_TOKEN="ENC:VvyOVVDj3DwSIYzKbYSSHmwA8rYKMbL66Rrx0WDAAy5AxeBRMc/TVDQmn+EUttgoQBu1"
 # Non impostare ANTHROPIC_API_KEY insieme al token — Claude CLI segnala conflitto auth
+```
+
+Backup RouterPark:
+
+```bash
+export ANTHROPIC_BASE_URL="https://routerpark.com"
+export ANTHROPIC_AUTH_TOKEN="ENC:VvyOW27c0XEbMKHtbLqkIUw1nZQpJNqf+lWJwmyGFE9z4eFqa+DVUyQApvo2pIZBVx+O"
 ```
 
 Profilo FreeModel (in catalogo, non attivo):
@@ -478,6 +572,7 @@ Backup `config.toml.bk`: relay **ZjAPI** `https://zjapi.com/v1`, modello `gpt-5.
 | Profilo | Base URL | API Key | Header auth |
 |---------|----------|---------|-------------|
 | `claude-freemodel` | `https://cc.freemodel.dev` | `ENC:Q/L8fGfSpTxVbd+aa8zZTTVH/PVZP7WS2UiOlF3LXCBGrsAmPu7zPVM0i547kdpKNhKg8F8+` | `ANTHROPIC_API_KEY` |
+| `claude-anyrouter` | `https://anyrouter.top` | `ENC:VvyOVVDj3DwSIYzKbYSSHmwA8rYKMbL66Rrx0WDAAy5AxeBRMc/TVDQmn+EUttgoQBu1` | `ANTHROPIC_AUTH_TOKEN` |
 | `claude-routerpark` | `https://routerpark.com` | `ENC:VvyOW27c0XEbMKHtbLqkIUw1nZQpJNqf+lWJwmyGFE9z4eFqa+DVUyQApvo2pIZBVx+O` | `ANTHROPIC_AUTH_TOKEN` |
 | `claude-routerpark-bbs` | `https://routerpark.com` | `ENC:VvyOQzK/1mYPG4jYOISsHVc7kJAEOe+e8UvJwnS4I3ZQ8ft0Td6uRShnsJotjoI6czme` | `ANTHROPIC_AUTH_TOKEN` |
 
@@ -606,6 +701,11 @@ Per i JWT OAuth molto lunghi (Copilot, Codex, Cline), il file sorgente canonico 
 | Codex v2api (post) | `https://v2api.top/` | `sk-Clt5…` (nel thread) | ❌ |
 | aicodelink (post 六一) | `https://aicodelink.top/v1` | `ENC:VvyOW3T+2FBQMZ/RMZGgLlE3vfRabPbYx1rU1WOxXEUX3dVhSMmgMwQRrpkRm4kBRSeV` | ❌ invalid |
 | ranai Codex (commento OP) | `https://sub.ranai.chat/v1` | `ENC:VvyOdjO18jZQYNiYb5KPGDFCoqMNPrOZ3B/alQuQXCRH8ZYrY+v2N1Q0iJ1mxdpNYBfy91w54JraGN/FWsVbIhD0kQ==` | ❌ invalid |
+| **MiMo** (BBS 西瓜皮 2026-06-13) | `token-plan-cn.xiaomimimo.com/v1` | `tp-c4lkkglwlgvnegyeghfnicrtgzsujtf7fql8je0zlxncdjwb` | ✅ `mimo-cn` |
+| **DeepSeek** (stesso post BBS) | `routerpark.com` (Anthropic-style) | `ENC:VvyOV3T64mEkHqfAEaCnN20Gt/VaBbbl1xXjylO9CV1j+etVTuT4VQ0QusxswqUwR0CJ` | ❌ 401 invalid |
+| **Claude** (stesso post BBS) | `routerpark.com` | `ENC:VvyOWm7Zwn0EFKrNC5aCEDEGsaE3PrSbzlvTwEO0XWZO/fpYccX5U1YFi/8HuYYPZQGr` | ❌ 401 invalid (test 2026-06-13) |
+| **MiniMax** (stesso post) | `api.minimaxi.com/anthropic` | `ENC:VvyOcHag5XEXOrbNLIXcTns+8JgvB/Xn+XXD22m2GXpBxuBSY9ThYFQwpegHoMcxWyLxhgA10v+Ha9SSTqMUUUvC2lJP+uApWhGg3jqZjgtQRLCfQ2n6z/cU9eN9rS9RUNb5Ykvm9VZXELHLHcKfS1Y3q/ReMrLM+1eD72g=` | 🟡 non testato su VPS |
+| **Codex** (stesso post) | `api-public.proxy-gls.de5.net/v1` | `ENC:VvyOaUjn9kUxYoD7OZ66EzcDh/MUE+DJ2Vz/6l+2C18c2sJGX9ikQyoBqJwQuqEoMDu+` | 🟡 non testato su VPS |
 
 ### 13.10 Siti senza API key sul VPS
 
@@ -614,6 +714,7 @@ Per i JWT OAuth molto lunghi (Copilot, Codex, Cline), il file sorgente canonico 
 | **micuapi.ai** | Solo login GitHub — generare key in dashboard |
 | **rkapi.com** | Solo login **manustrong** — generare key in console |
 | **api520.pro** | Solo login **trapbeats1212@gmail.com** — generare key in console |
+| **platform.deepseek.com** | Nessuna key — registrarsi e generare `DEEPSEEK_API_KEY` per provider Pi `deepseek` |
 
 ### 13.11 Test curl rapidi (con le key sopra)
 
@@ -643,6 +744,18 @@ curl -s https://test-ai.833323.xyz/v1/chat/completions \
   -H "Authorization: Bearer ENC:VvyOd2O+9jMAbNjLZ5DbSTVA9KMNabXL2kuKlQvFWSMS88UkMbmlPVFk35lskohNMUH39Fg7sJ+PHI+WXMsPcx2hkQ==" \
   -H "Content-Type: application/json" \
   -d '{"model":"gpt-5.4","max_tokens":16,"messages":[{"role":"user","content":"ok"}]}'
+
+# MiMo CN (RouterPark BBS 2026-06-13)
+curl -s https://token-plan-cn.xiaomimimo.com/v1/chat/completions \
+  -H "Authorization: Bearer tp-c4lkkglwlgvnegyeghfnicrtgzsujtf7fql8je0zlxncdjwb" \
+  -H "Content-Type: application/json" \
+  -d '{"model":"mimo-v2.5-pro","max_tokens":32,"messages":[{"role":"user","content":"ok"}]}'
+
+# DeepSeek ufficiale (sostituire DEEPSEEK_API_KEY)
+curl -s https://api.deepseek.com/chat/completions \
+  -H "Authorization: Bearer $DEEPSEEK_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{"model":"deepseek-v4-flash","max_tokens":32,"messages":[{"role":"user","content":"ok"}]}'
 ```
 
 ---
@@ -651,10 +764,11 @@ curl -s https://test-ai.833323.xyz/v1/chat/completions \
 
 1. **MicuAPI** — generare API key in console e aggiungere `openai-micu` in `models.json` (top HelpAIO).
 2. **RKAPI / api520** — stesso flusso se i prezzi conviene.
-3. **Claude Code** è già su RouterPark BBS; valutare Micu se i limiti BBS diventano stretti (modello ID completo, non `haiku`).
-4. Ruotare key **pubbliche** se esposte in chat (account RouterPark `sk-HhQF…`); BBS `sk-P42A…` è giveaway condivisa — usare con moderazione.
-5. **aicodelink** — solo con key personale da registrazione, non quella del post.
-6. Aggiungere **iamhc** provider OpenAI per `qwen3.6-plus` se vuoi un solo billing su quel conto.
+3. **DeepSeek ufficiale** — generare key su platform.deepseek.com e aggiungere in `auth.json` → provider `deepseek`.
+4. **AnyRouter sonnet/opus** — se 503 persiste, usare haiku (default) o `claude-routerpark` per modelli pesanti.
+5. Ruotare key **pubbliche** se esposte in chat (account RouterPark `sk-HhQF…`); BBS `sk-P42A…` è giveaway condivisa — usare con moderazione.
+6. **aicodelink** — solo con key personale da registrazione, non quella del post.
+7. Aggiungere **iamhc** provider OpenAI per `qwen3.6-plus` se vuoi un solo billing su quel conto.
 
 ---
 
