@@ -114,57 +114,26 @@ Trovare **relay services (中转站)** affidabili che diano accesso a modelli AI
 
 ---
 
-## Integrazione Pi (riproduzione ambiente)
+## Integrazione Pi — repo unico my-pi
 
-Questo repo è anche un **pi-package**: guide, skills, comandi e bootstrap per clonare lo stack su un altro VPS.
+> **Sorgente di verità:** `~/.pi/agent` → [github.com/manumastro/my-pi](https://github.com/manumastro/my-pi)  
+> Le guide di questo repo sono copiate in **`my-pi/explorer/`**. Vedi `README-MY-PI.md`.
 
-### Due repo
-
-| Repo | Contenuto | In git |
-|------|-----------|--------|
-| **linux-do-explorer** | Guide, `VPS-STACK-RELAY-ENCRYPTED.md`, `pi/manifest.json`, skills, extension | Sì (no segreti in chiaro) |
-| **my-pi** | `settings.json`, extensions (`anyrouter-claude-code-compat`, …) | Sì (no `models.json` / `auth.json`) |
-
-### Bootstrap su macchina nuova
+### Sync reciproco tra ambienti
 
 ```bash
-git clone https://github.com/manumastro/linux-do-explorer.git
-cd linux-do-explorer
-python3 encrypt_vps_v2.py decrypt VPS-STACK-RELAY-ENCRYPTED.md   # → VPS-STACK-RELAY.md locale
-bash scripts/bootstrap-pi.sh
+bash ~/.pi/agent/scripts/stack-sync.sh push   # condividi modifiche da questo VPS
+bash ~/.pi/agent/scripts/stack-sync.sh pull   # allineati agli altri VPS
 ```
 
-Oppure install manuale:
+In Pi: `/stack-sync push` · `/stack-sync pull`
+
+### Nuovo VPS
 
 ```bash
-pi install git:github.com/manumastro/my-pi@master
-pi install git:github.com/manumastro/linux-do-explorer@main
+git clone https://github.com/manumastro/my-pi.git ~/.pi/agent
+cd ~/.pi/agent && npm install && bash scripts/stack-sync.sh pull
 ```
-
-Segreti (`models.json`, `auth.json`):
-
-```bash
-# Sul VPS sorgente — esporta backup gitignored
-bash scripts/sync-pi-secrets.sh export
-rsync -av stack-backup/ nuovo-vps:~/linux-do-explorer/stack-backup/
-
-# Sul VPS nuovo — dopo bootstrap
-bash scripts/sync-pi-secrets.sh import
-```
-
-Alternativa: copia a mano da `VPS-STACK-RELAY.md` §13.
-
-### Comandi e skills in Pi
-
-| Comando | Azione |
-|---------|--------|
-| `/explorer-guide` | Elenco guide e percorsi repo |
-| `/stack-bootstrap` | Checklist riproduzione (legge `pi/manifest.json`) |
-| `/relay-test [provider] [model]` | Smoke test provider |
-
-Skills: `/skill:vps-stack-relay` · `/skill:relay-explorer`
-
-Manifest machine-readable: `pi/manifest.json` (default, smoke tests, env vars, ordine bootstrap).
 
 ---
 
