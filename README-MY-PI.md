@@ -1,24 +1,16 @@
-# linux-do-explorer → migrato in my-pi
+# Deprecato — usa ~/.pi/agent
 
-Le guide relay e lo stack VPS sono ora in **`~/.pi/agent/explorer/`** nel repo unico:
-
-**https://github.com/manumastro/my-pi**
-
-## Sync tra ambienti
+Il progetto **linux-do-explorer** è stato unificato in **my-pi**:
 
 ```bash
-# Clone (nuovo VPS)
-git clone https://github.com/manumastro/my-pi.git ~/.pi/agent
-cd ~/.pi/agent && npm install
-bash scripts/stack-sync.sh pull
+# Workspace unico (Pi + relay explorer)
+cd ~/.pi/agent    # git clone https://github.com/manumastro/my-pi.git ~/.pi/agent
 
-# Dopo modifiche (qualsiasi VPS)
+# Sync tra VPS
+bash scripts/stack-sync.sh pull
 bash scripts/stack-sync.sh push
-
-# Altro VPS si allinea
-bash scripts/stack-sync.sh pull
 ```
 
-In Pi: `/stack-sync push` · `/stack-sync pull`
+Apri **`~/.pi/agent`** in Cursor al posto di questa cartella.
 
-Questo repo (`linux-do-explorer`) resta come archivio/workspace locale; la sorgente di verità è **my-pi**.
+`~/linux-do-explorer/` può restare solo per file legacy (es. `grok_register/`).
