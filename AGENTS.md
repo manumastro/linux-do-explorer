@@ -4,6 +4,17 @@
 
 ---
 
+## ⚡ Sync tra VPS (my-pi)
+
+```bash
+bash ~/.pi/agent/scripts/stack-sync.sh push   # dopo modifiche su questo VPS
+bash ~/.pi/agent/scripts/stack-sync.sh pull   # allinearsi sull'altro VPS
+```
+
+In Pi: `/stack-sync push` · `/stack-sync pull`
+
+---
+
 ## ⚠️ REGOLA FONDAMENTALE
 
 > **PRIMA di tutto, consulta sempre le guide in locale nella cartella `/home/manu/linux-do-explorer/`**
