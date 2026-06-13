@@ -11,3 +11,6 @@ bash ~/.pi/agent/scripts/stack-sync.sh pull   # allinearsi
 ```
 
 Leggi `~/.pi/agent/AGENTS.md` per il workflow completo.
+
+**Pi da questa cartella:** usa solo `~/.pi/agent` (nessun package in `.pi/settings.json`).
+Meglio: `cd ~/.pi/agent && pi` oppure apri `~/.pi/agent` in Cursor.

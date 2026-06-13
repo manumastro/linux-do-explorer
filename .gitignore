@@ -22,6 +22,10 @@ auth.json
 models.json
 stack-backup/
 
+# --- Pi project cache (usa ~/.pi/agent, non clonare my-pi qui) ---
+.pi/git/
+.pi/npm/
+
 # --- Temporanei / log / test output ---
 *.log
 bridge-test.log
